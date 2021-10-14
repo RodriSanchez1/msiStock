@@ -9,14 +9,14 @@ package Modelos;
  *
  * @author Alex
  */
-public class Depósito {
+public class Deposito {
     private int numeroDeposito;
 
-    public Depósito(int numeroDeposito) {
+    public Deposito(int numeroDeposito) {
         this.numeroDeposito = numeroDeposito;
     }
 
-    public Depósito() {
+    public Deposito() {
     }
     
     
