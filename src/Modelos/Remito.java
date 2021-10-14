@@ -17,8 +17,9 @@ public class Remito {
     private int nroRemito;
     private Date fecha;
     private String tipoMovimiento; //capaz hay que cambiarlo a int despues de hacer la otra clase.+
-    private int legajoUsuario;
-
+    private int legajoUsuario; //aca habria que ahcer composicion  con el legajo de usuario?
+    // private Usuario usuario; 
+    
     public int getNroRemito() {
         return nroRemito;
     }
