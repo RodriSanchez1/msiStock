@@ -16,7 +16,7 @@ import java.util.Date;
 public class Remito {
     private int nroRemito;
     private Date fecha;
-    private String tipoMovimiento; //capaz hay que cambiarlo a int despues de hacer la otra clase.+
+    private int tipoMovimiento; 
     private int legajoUsuario;
 
     public int getNroRemito() {
@@ -35,11 +35,11 @@ public class Remito {
         this.fecha = fecha;
     }
 
-    public String getTipoMovimiento() {
+    public int getTipoMovimiento() {
         return tipoMovimiento;
     }
 
-    public void setTipoMovimiento(String tipoMovimiento) {
+    public void setTipoMovimiento(int tipoMovimiento) {
         this.tipoMovimiento = tipoMovimiento;
     }
 
@@ -51,7 +51,7 @@ public class Remito {
         this.legajoUsuario = legajoUsuario;
     }
 
-    public Remito(int nroRemito, Date fecha, String tipoMovimiento, int legajoUsuario) {
+    public Remito(int nroRemito, Date fecha, int tipoMovimiento, int legajoUsuario) {
         this.nroRemito = nroRemito;
         this.fecha = fecha;
         this.tipoMovimiento = tipoMovimiento;
@@ -59,6 +59,19 @@ public class Remito {
     }
 
     public Remito() {
+    }
+    
+    public String verTipoMovimiento(){
+        String tipo;
+        switch(tipoMovimiento){
+            case 1: tipo = "Entrada";
+            break;
+            default: tipo = "Salida";
+            break;
+            
+        }
+        return tipo;
+        
     }
 
     @Override
