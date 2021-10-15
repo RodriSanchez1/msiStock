@@ -15,7 +15,7 @@ public class Producto {
     private int stockMinimo;
     private String rubro;
     private String marca;
-    private String formatoVenta;
+    private String formatoVenta; //esto es otra clase y va por composicion.
     private String tamanio;
 
     public Producto(int codigo, String nombreProducto, int stockMinimo, String rubro, String marca, String formatoVenta, String tamanio) {
