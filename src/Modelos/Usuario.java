@@ -13,9 +13,14 @@ public class Usuario {
     private int legajo;
     private String nombreUsuario;
     private String contrasenia;
-    private String rolUsuario;
+    private int rolUsuario;
 
-    public Usuario(int legajo, String nombreUsuario, String contrasenia, String rolUsuario) {
+    @Override
+    public String toString() {
+        return "Usuario{" + "legajo=" + legajo + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + ", rolUsuario=" + rolUsuario + '}';
+    }
+
+    public Usuario(int legajo, String nombreUsuario, String contrasenia, int rolUsuario) {
         this.legajo = legajo;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
@@ -49,11 +54,11 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public String getRolUsuario() {
+    public int getRolUsuario() {
         return rolUsuario;
     }
 
-    public void setRolUsuario(String rolUsuario) {
+    public void setRolUsuario(int rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
     
