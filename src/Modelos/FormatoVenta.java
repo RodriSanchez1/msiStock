@@ -9,10 +9,9 @@ package Modelos;
  *
  * @author Flor
  */
-public class LugarUbicacion {
+public class FormatoVenta {
     private int codigo;
-    private String nombre;
-    private Sector sector;
+    private String descripcion;
 
     public int getCodigo() {
         return codigo;
@@ -22,28 +21,26 @@ public class LugarUbicacion {
         this.codigo = codigo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-  
-
-    public LugarUbicacion(int codigo, String nombre, Sector sector) {
+    public FormatoVenta(int codigo, String descripcion) {
         this.codigo = codigo;
-        this.nombre = nombre;
-        this.sector = sector;
+        this.descripcion = descripcion;
     }
 
-    public LugarUbicacion() {
+    public FormatoVenta() {
     }
+    
 
     @Override
     public String toString() {
-        return "LugarUbicacion{" + "codigo=" + codigo + ", nombre=" + nombre + ", sector=" + sector + '}';
+        return "FormatoVenta{" + "codigo=" + codigo + ", descripcion=" + descripcion + '}';
     }
     
     
