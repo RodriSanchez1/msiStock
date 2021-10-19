@@ -5,18 +5,98 @@
  */
 package Ventana;
 
+import Controladores.controladorRemitoInterno;
+import Modelos.TipoMovimiento;
+import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.text.TableView;
+
 /**
  *
  * @author ginin
  */
 public class movInterno extends javax.swing.JFrame {
-
+    controladorRemitoInterno controlador = new controladorRemitoInterno();
     /**
      * Creates new form Carga_Producto
+     * @param rol
      */
-    public movInterno() {
+    public movInterno(String rol) {
+        System.out.println(rol);
         initComponents();
-        
+        fillComboTipoRemito();
+        fillTableDetalleRemito();
+        tableDetalleRemito.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                System.out.println("Holas");
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    DefaultTableModel model = (DefaultTableModel) tableDetalleRemito.getModel();
+                    model.addRow(new Object[]{null, null, null});
+                }
+            }
+        });
+    }
+
+//     private void fillComboHabitaciones() {
+//        ControladorHabitacion controlador = new ControladorHabitacion();
+//        DefaultComboBoxModel model = new DefaultComboBoxModel();
+//        ArrayList<Habitacion> lista = controlador.obtenerHabitaciones();
+//        for (Habitacion habitacion : lista) {
+//            model.addElement(habitacion);
+//        }
+//        cmbHabitaciones.setModel(model);
+//    }
+    private void fillComboTipoRemito() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<TipoMovimiento> lista = new ArrayList<>();
+        lista.add(new TipoMovimiento(1, "Online"));
+        lista.add(new TipoMovimiento(2, "Presencial"));
+        for (TipoMovimiento item : lista) {
+            model.addElement(item);
+        }
+        cmbTipoMovimiento.setModel(model);
+    }
+//     private void fillComboOrigen() {
+//        DefaultComboBoxModel model = new DefaultComboBoxModel();
+//        ArrayList<TipoMovimiento> lista = new ArrayList<>();
+//        lista.add(new TipoMovimiento(1,"Entrada"));
+//        lista.add(new TipoMovimiento(2,"Salida"));
+//        for (TipoMovimiento item : lista) {
+//            model.addElement(item);
+//        }
+//        cmbOrigenMov.setModel(model);
+//    }
+
+    private void fillTableDetalleRemito() {
+        // ArrayList<Servicio> lista = controlador.obtenerServiciosXHabitacion((Habitacion) cmbHabitaciones.getSelectedItem());
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Producto", "Forma de venta", "Cantidad"});
+        model.addRow(new Object[]{null, null, null});
+        tableDetalleRemito.setModel(model);
+        TableColumn testColumn = tableDetalleRemito.getColumnModel().getColumn(0);
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.addItem("Asia");
+        comboBox.addItem("Europe");
+        comboBox.addItem("North America");
+        comboBox.addItem("South America");
+        comboBox.addItem("Africa");
+        comboBox.addItem("Antartica");
+        comboBox.addItem("Australia");
+        testColumn.setCellEditor(new DefaultCellEditor(comboBox));
+
+//        for (Servicio row : lista) {
+//            model.addRow(new Object[]{row.getConcepto(),row.getImporte()});
+//        }
+    }
+    private void setNroRemito(){
+       nroRemito.setText(String.valueOf(controlador.obtenerNroRemitoSiguiente()));
     }
 
     /**
@@ -33,15 +113,18 @@ public class movInterno extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbOrigenMov = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableDetalleRemito = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        nroRemito = new javax.swing.JLabel();
+        cmbTipoMovimiento = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,53 +155,67 @@ public class movInterno extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 0, 0));
         jLabel2.setText("Motivo:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Venta presencial" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, -1, -1));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ventas" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 100, -1));
+        cmbOrigenMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ventas" }));
+        getContentPane().add(cmbOrigenMov, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 100, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel3.setText("Tipo:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+        jLabel3.setText("Tipo Movimiento:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "05/10/2021" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 110, 30));
+        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 110, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableDetalleRemito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Articulo", "Forma de venta", "Cantidad"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableDetalleRemito);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 510, 200));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 0));
         jLabel6.setText("Fecha:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, -1, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 0, 0));
         jLabel7.setText("Origen/Destino:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel8.setText("Nro: 001");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, -1, 20));
+        nroRemito.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        nroRemito.setText("0");
+        getContentPane().add(nroRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, -1, 20));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Salida" }));
-        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 100, -1));
+        cmbTipoMovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Salida" }));
+        cmbTipoMovimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTipoMovimientoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbTipoMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 100, -1));
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel9.setText("Usuario:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
+
+        jLabel4.setText("user");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel10.setText("Número de remito:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, 20));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -130,63 +227,32 @@ public class movInterno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cmbTipoMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMovimientoActionPerformed
+        // TDO add your handling code here:
+    }//GEN-LAST:event_cmbTipoMovimientoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(movInterno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(movInterno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(movInterno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(movInterno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new movInterno().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
+    private javax.swing.JComboBox<String> cmbOrigenMov;
+    private javax.swing.JComboBox<String> cmbTipoMovimiento;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel nroRemito;
+    private javax.swing.JTable tableDetalleRemito;
     // End of variables declaration//GEN-END:variables
 }

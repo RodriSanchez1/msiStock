@@ -15,16 +15,16 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Alex
+ * @author rodri
  */
-public class controladorUsuario {
-
-    private Connection con = null;
+public class controladorRemitoInterno {
+        private Connection con = null;
 
     private void abrirConexion() {
 
         try {
-            con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
+            //con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
+            con =  DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -40,26 +40,21 @@ public class controladorUsuario {
         }
     }
 
-    public ArrayList<Usuario> obtenerUsuarios(){
-        ArrayList<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+    public int obtenerNroRemitoSiguiente(){
+        int id = 0;
         try {
             abrirConexion();
-            String query = "select * from usuario";
+            String query = "select MAX nroRemito from remito";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
-            while(rs.next()){
-                int legajo = rs.getInt("legajo");
-                String nombre = rs.getString("nombre");
-                String contrasenia = rs.getString("contrasenia");
-                int rol = rs.getInt("idRol");
-                Usuario usuario = new Usuario (legajo, nombre, contrasenia, rol);
-                ListaUsuarios.add(usuario);
+            if(rs.next()){
+                id = rs.getInt(1);
             }
         } catch (SQLException ex) {
             System.out.println(ex);;
         }finally{
             cerrarConexion();
         }
-        return ListaUsuarios;
+        return id+1;
     } 
 }
