@@ -13,12 +13,13 @@ public class Producto {
     private int codigo;
     private String nombreProducto;
     private int stockMinimo;
-    private String rubro;
-    private String marca;
-    private String formatoVenta; //esto es otra clase y va por composicion.
+    private int rubro;
+    private int marca;
+    private int formatoVenta; //esto es otra clase y va por composicion.
     private String tamanio;
+    private int formaVenta;
 
-    public Producto(int codigo, String nombreProducto, int stockMinimo, String rubro, String marca, String formatoVenta, String tamanio) {
+    public Producto(int codigo, String nombreProducto, int stockMinimo, int rubro, int marca, int formatoVenta, String tamanio, int formaVenta) {
         this.codigo = codigo;
         this.nombreProducto = nombreProducto;
         this.stockMinimo = stockMinimo;
@@ -26,6 +27,7 @@ public class Producto {
         this.marca = marca;
         this.formatoVenta = formatoVenta;
         this.tamanio = tamanio;
+        this.formaVenta = formaVenta;
     }
 
     public Producto() {
@@ -55,27 +57,27 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
-    public String getRubro() {
+    public int getRubro() {
         return rubro;
     }
 
-    public void setRubro(String rubro) {
+    public void setRubro(int rubro) {
         this.rubro = rubro;
     }
 
-    public String getMarca() {
+    public int getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(int marca) {
         this.marca = marca;
     }
 
-    public String getFormatoVenta() {
+    public int getFormatoVenta() {
         return formatoVenta;
     }
 
-    public void setFormatoVenta(String formatoVenta) {
+    public void setFormatoVenta(int formatoVenta) {
         this.formatoVenta = formatoVenta;
     }
 
@@ -85,6 +87,14 @@ public class Producto {
 
     public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
+    }
+
+    public int getFormaVenta() {
+        return formaVenta;
+    }
+
+    public void setFormaVenta(int formaVenta) {
+        this.formaVenta = formaVenta;
     }
     
     
