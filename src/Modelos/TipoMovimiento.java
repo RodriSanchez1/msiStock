@@ -9,9 +9,9 @@ package Modelos;
  *
  * @author Flor
  */
-public class Ubicacion {
+public class TipoMovimiento {
     private int id;
-    private Estanteria estanteria; //PARA MI VA LUGAR DE UBICACION ACA
+    private String nombre;
 
     public int getId() {
         return id;
@@ -21,18 +21,25 @@ public class Ubicacion {
         this.id = id;
     }
 
-  
-    public Ubicacion(int id, Estanteria estanteria) {
-        this.id = id;
-        this.estanteria = estanteria;
+    public String getNombre() {
+        return nombre;
     }
 
-    public Ubicacion() {
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public TipoMovimiento(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public TipoMovimiento() {
     }
 
     @Override
     public String toString() {
-        return "Ubicacion{" + "id=" + id + ", estanteria=" + estanteria + '}';
+        return "TipoMovimiento{" + "id=" + id + ", nombre=" + nombre + '}';
     }
     
 }
