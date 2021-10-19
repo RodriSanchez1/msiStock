@@ -9,16 +9,16 @@ package Modelos;
  *
  * @author Flor
  */
-public class tipoMovimiento {
-    private int id;
+public class Rol {
+    private int idRol;
     private String nombre;
 
-    public int getId() {
-        return id;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     public String getNombre() {
@@ -29,17 +29,18 @@ public class tipoMovimiento {
         this.nombre = nombre;
     }
 
-    public tipoMovimiento(int id, String nombre) {
-        this.id = id;
+    public Rol(int idRol, String nombre) {
+        this.idRol = idRol;
         this.nombre = nombre;
     }
 
-    public tipoMovimiento() {
+    public Rol() {
     }
 
     @Override
     public String toString() {
-        return "tipoMovimiento{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Rol{" + "idRol=" + idRol + ", nombre=" + nombre + '}';
     }
+    
     
 }
