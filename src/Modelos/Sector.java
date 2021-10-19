@@ -30,13 +30,7 @@ public class Sector {
         this.nombre = nombre;
     }
 
-    public Estanteria getEstanteria() {
-        return estanteria;
-    }
-
-    public void setEstanteria(Estanteria estanteria) {
-        this.estanteria = estanteria;
-    }
+  
 
     public Sector(int id, String nombre, Estanteria estanteria) {
         this.id = id;
