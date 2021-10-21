@@ -5,7 +5,7 @@
  */
 package Controladores;
 
-import Modelos.Usuario;
+import Modelos.Marca;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,16 +15,15 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Alex
+ * @author Usuario
  */
-public class controladorUsuario {
-
+public class ControladorMarca {
     private Connection con = null;
-
+    
     private void abrirConexion() {
 
         try {
-            con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=easyStock", "sa", "fa");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -39,28 +38,26 @@ public class controladorUsuario {
             ex.printStackTrace();
         }
     }
-
-    public ArrayList<Usuario> obtenerUsuarios(){
-        ArrayList<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+    
+     public ArrayList<Marca> obtenerMarca(){
+        ArrayList<Marca> lstMarca = new ArrayList<>();
         try {
             abrirConexion();
-            String query = "select * from usuario";
-            Statement st = con.createStatement();
+            String query = "select * from marca";
+            Statement st = con. createStatement();
             ResultSet rs = st.executeQuery(query);
+            
             while(rs.next()){
-                int legajo = rs.getInt("legajo");
+                int idMarca = rs.getInt("idMarca");
                 String nombre = rs.getString("nombre");
-                String contrasenia = rs.getString("contrasenia");
-                int rol = rs.getInt("idRol");
-                Usuario usuario = new Usuario (legajo, nombre, contrasenia, rol);
-                ListaUsuarios.add(usuario);
+                Marca marca = new Marca (idMarca, nombre);
+                lstMarca.add(marca);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
         }finally{
-            cerrarConexion();
-        }
-        return ListaUsuarios;
+         cerrarConexion();
+     }
+        return lstMarca;
     }
-    
 }

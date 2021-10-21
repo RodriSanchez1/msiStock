@@ -17,7 +17,7 @@ public class Producto {
     private Rubro rubro;
     private FormatoVenta formatoVenta; 
     private String tamanio;
-    private int formaVenta;
+    
 
     public int getCodigo() {
         return codigo;
@@ -43,6 +43,17 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public Rubro getRubro() {
+        return rubro;
+    }
+
+    public FormatoVenta getFormatoVenta() {
+        return formatoVenta;
+    }
 
     public String getTamanio() {
         return tamanio;

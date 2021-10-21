@@ -1,6 +1,15 @@
 
 package Ventana;
+import Controladores.ControladorMarca;
 import Controladores.controladorProducto;
+import Modelos.FormatoVenta;
+import Modelos.Marca;
+import Modelos.Producto;
+import Modelos.Rubro;
+import java.util.ArrayList;
+import javax.persistence.Convert;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ginin
@@ -10,6 +19,17 @@ public class Carga_Producto extends javax.swing.JFrame {
     public Carga_Producto() {
         initComponents();
         controlador= new controladorProducto();
+    }
+    
+    public void cargarMarca(){
+       Controladores.ControladorMarca controla = new ControladorMarca();
+       ArrayList<Marca> lst = controla.obtenerMarca();
+       DefaultComboBoxModel model = new DefaultComboBoxModel();
+       
+        for (Marca m : lst) {
+            model.addElement(m);
+        }
+        cboMarcaProducto.setModel(model);
     }
 
    
@@ -23,7 +43,6 @@ public class Carga_Producto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtNombreProducto = new javax.swing.JTextField();
@@ -34,7 +53,6 @@ public class Carga_Producto extends javax.swing.JFrame {
         BtnCancelarAltaProducto = new javax.swing.JButton();
         cboMarcaProducto = new javax.swing.JComboBox<>();
         cboFormatoVentaProducto = new javax.swing.JComboBox<>();
-        cboFormaVentaProducto = new javax.swing.JComboBox<>();
         cboRubroProducto = new javax.swing.JComboBox<>();
         Fondo = new javax.swing.JLabel();
 
@@ -71,15 +89,10 @@ public class Carga_Producto extends javax.swing.JFrame {
         jLabel7.setText("Nombre:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel8.setText("Forma de venta:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
-
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(153, 0, 0));
         jLabel10.setText("Formato de venta:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 400, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(153, 0, 0));
@@ -113,16 +126,13 @@ public class Carga_Producto extends javax.swing.JFrame {
         BtnCancelarAltaProducto.setText("Cancelar");
         getContentPane().add(BtnCancelarAltaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 100, 30));
 
-        cboMarcaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Item 2", "Item 3", "Item 4" }));
+        cboMarcaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", " " }));
         getContentPane().add(cboMarcaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 160, 30));
 
-        cboFormatoVentaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cboFormatoVentaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 160, 30));
+        cboFormatoVentaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Lote", "Unidad", "Pack", "Caja Completa" }));
+        getContentPane().add(cboFormatoVentaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 160, 30));
 
-        cboFormaVentaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cboFormaVentaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 160, 30));
-
-        cboRubroProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Item 2", "Item 3", "Item 4" }));
+        cboRubroProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Pintureria", "Herramienta", "Plomeria", "Electricidad", "Construccion" }));
         getContentPane().add(cboRubroProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 160, 30));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
@@ -141,6 +151,23 @@ public class Carga_Producto extends javax.swing.JFrame {
         String tamnio = txtTamañoProducto.getText();
         int codigo = 0;
         int stockMinimo= 0;
+        try {
+            codigo = Integer.parseInt(txtCodigoProducto.getText());
+            stockMinimo = Integer.parseInt(txtStockMinimoProducto.getText());
+            Marca marca = (Marca)cboMarcaProducto.getSelectedItem();
+            int rubro = (cboRubroProducto).getSelectedIndex();
+            int formatoVenta = (cboFormatoVentaProducto).getSelectedIndex();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Hay un error al cargar el nuevo producto");
+        }
+        Marca marca = new Marca(0, nombre);
+        Rubro rubro = new Rubro(0, nombre);
+        FormatoVenta formatoVenta = new FormatoVenta(0, tamnio);
+        Producto nuevo = new Producto(codigo, nombre, stockMinimo, marca, rubro, formatoVenta, tamnio);
+        controlador.agregarProducto(nuevo);
+        
+        JOptionPane.showMessageDialog(null, "El producto se cambio correctamente");
+        
     }//GEN-LAST:event_btnCargarProductoActionPerformed
 
     /**
@@ -182,7 +209,6 @@ public class Carga_Producto extends javax.swing.JFrame {
     private javax.swing.JButton BtnCancelarAltaProducto;
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton btnCargarProducto;
-    private javax.swing.JComboBox<String> cboFormaVentaProducto;
     private javax.swing.JComboBox<String> cboFormatoVentaProducto;
     private javax.swing.JComboBox<String> cboMarcaProducto;
     private javax.swing.JComboBox<String> cboRubroProducto;
@@ -194,7 +220,6 @@ public class Carga_Producto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtNombreProducto;
     private javax.swing.JTextField txtStockMinimoProducto;

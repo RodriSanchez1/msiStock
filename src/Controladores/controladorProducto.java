@@ -5,11 +5,13 @@
  */
 package Controladores;
 
+import Modelos.Marca;
 import Modelos.Producto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -41,15 +43,15 @@ public class controladorProducto {
     public void agregarProducto(Producto p){
         try{
             abrirConexion();
-            PreparedStatement st = con.prepareStatement("Insert into producto(codigo, nombre, idMarca, idRubro, volumen, idFormato, stockMinimo, formaVenta)values (?,?,?,?,?,?,?,?)");
+            PreparedStatement st = con.prepareStatement("Insert into producto(codigo, nombre, idMarca, idRubro, volumen, idFormato, stockMinimo)values (?,?,?,?,?,?,?)");
             st.setInt(1, p.getCodigo());
             st.setString(2, p.getNombreProducto());
-            st.setInt(3, p.getMarca());
-            st.setInt(4, p.getRubro());
+            st.setInt(3, p.getMarca().getIdMarca());
+            st.setInt(4, p.getRubro().getIdRubro());
             st.setString(5, p.getTamanio());
-            st.setInt(6, p.getFormatoVenta());
+            st.setInt(6, p.getFormatoVenta().getCodigo());
             st.setInt(7, p.getStockMinimo());
-            st.setInt(8, p.getFormaVenta());
+            
             
             st.executeUpdate();
             st.close();
@@ -59,6 +61,8 @@ public class controladorProducto {
             System.out.println("algo falló");
         }
     }
+    
+   
     
     
 }
