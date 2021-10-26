@@ -5,6 +5,14 @@
  */
 package Ventana;
 
+import Controladores.controladorRol;
+import Controladores.controladorUsuario;
+import Modelos.Rol;
+import Modelos.Usuario;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ginin
@@ -16,8 +24,27 @@ public class CrearUsario extends javax.swing.JFrame {
      */
     public CrearUsario() {
         initComponents();
+        cargarRoles();
         
     }
+    
+    public void cargarRoles(){
+        controladorRol contro = new controladorRol();
+        ArrayList<Rol> lista = contro.obtenerRoles();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (Rol X : lista) {
+            model.addElement(X);
+        }
+        cmbRoles.setModel(model);
+    }
+    
+    public void limpiarCampos(){
+        txtLegajo.setText("");
+        txtContrasenia.setText("");
+        txtNombreusuario.setText("");
+        txtRepetirContrasenia.setText("");
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,22 +57,24 @@ public class CrearUsario extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        btnActualizar = new javax.swing.JButton();
+        cmbRoles = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtLegajo = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
+        txtRepetirContrasenia = new javax.swing.JPasswordField();
+        txtContrasenia = new javax.swing.JPasswordField();
+        txtNombreusuario = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
+        txtNombreusuario1 = new javax.swing.JTextField();
+        jPasswordField2 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,137 +91,251 @@ public class CrearUsario extends javax.swing.JFrame {
         jButton3.setText("Cancelar");
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 100, 30));
 
-        jButton2.setBackground(new java.awt.Color(102, 0, 0));
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 0));
-        jButton2.setText("Actualizar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setBackground(new java.awt.Color(102, 0, 0));
+        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 0));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 110, 30));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, 110, 30));
 
-        jComboBox1.setBackground(new java.awt.Color(102, 102, 102));
-        jComboBox1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 120, 30));
+        cmbRoles.setBackground(new java.awt.Color(102, 102, 102));
+        cmbRoles.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        cmbRoles.setForeground(new java.awt.Color(255, 255, 255));
+        cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        cmbRoles.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        getContentPane().add(cmbRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 200, 30));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("Contraseña:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 150, -1));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Usuario:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 110, -1));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(51, 51, 51));
         jLabel10.setText("Rol de usario:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 160, -1));
         jLabel10.getAccessibleContext().setAccessibleName("Reingrese la\n contrseña");
 
-        jTextField1.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 51));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 120, 30));
-
-        jTextField2.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 51));
-        jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 120, 30));
-
-        jTextField3.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 51));
-        jTextField3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField3.setSelectedTextColor(new java.awt.Color(51, 51, 51));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 100, 30));
+        txtLegajo.setBackground(new java.awt.Color(102, 102, 102));
+        txtLegajo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        txtLegajo.setForeground(new java.awt.Color(255, 255, 51));
+        txtLegajo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtLegajo.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        txtLegajo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtLegajoFocusLost(evt);
+            }
+        });
+        getContentPane().add(txtLegajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 90, 30));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setText("Reingrese la contrseña:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 250, -1));
 
-        jButton4.setBackground(new java.awt.Color(102, 0, 0));
-        jButton4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 0));
-        jButton4.setText("Borrar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(102, 0, 0));
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 0));
+        btnEliminar.setText("Borrar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 110, 30));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 110, 30));
 
-        jButton5.setBackground(new java.awt.Color(102, 0, 0));
-        jButton5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 0));
-        jButton5.setText("Buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        txtRepetirContrasenia.setBackground(new java.awt.Color(102, 102, 102));
+        txtRepetirContrasenia.setForeground(new java.awt.Color(255, 255, 51));
+        getContentPane().add(txtRepetirContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 200, 30));
+
+        txtContrasenia.setBackground(new java.awt.Color(102, 102, 102));
+        txtContrasenia.setForeground(new java.awt.Color(255, 255, 51));
+        getContentPane().add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 200, 30));
+
+        txtNombreusuario.setBackground(new java.awt.Color(102, 102, 102));
+        txtNombreusuario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        txtNombreusuario.setForeground(new java.awt.Color(255, 255, 51));
+        txtNombreusuario.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtNombreusuario.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        getContentPane().add(txtNombreusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 200, 30));
+
+        btnBuscar.setBackground(new java.awt.Color(102, 0, 0));
+        btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 0));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, 120, 30));
-
-        jTextField4.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(255, 255, 51));
-        jTextField4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField4.setSelectedTextColor(new java.awt.Color(51, 51, 51));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 120, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 200, 30));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(51, 51, 51));
         jLabel12.setText("Legajo:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 100, -1));
 
-        jButton6.setBackground(new java.awt.Color(102, 0, 0));
-        jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 0));
-        jButton6.setText("Crear");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnCrear.setBackground(new java.awt.Color(102, 0, 0));
+        btnCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 0));
+        btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnCrearActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 110, 30));
+        getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 110, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/crearUsarioblanco.png"))); // NOI18N
         jLabel3.setText("jLabel3");
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 390, 260));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 500, 260));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Intro.jpg"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-170, 0, 940, -1));
 
+        txtNombreusuario1.setBackground(new java.awt.Color(102, 102, 102));
+        txtNombreusuario1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        txtNombreusuario1.setForeground(new java.awt.Color(255, 255, 51));
+        txtNombreusuario1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtNombreusuario1.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        getContentPane().add(txtNombreusuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 200, 30));
+
+        jPasswordField2.setText("jPasswordField1");
+        getContentPane().add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    
+        
+            
+        if(txtContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || txtLegajo.getText().trim().equals("") || !txtLegajo.getText().trim().matches("[0-9]*") || cmbRoles.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(this, "Verificar que todos los campos estén rellenados correctamente");
+            
+        }else{
+            String contrasenia = txtContrasenia.getText().trim();
+            String nombreUsuario = txtNombreusuario.getText().trim();
+            Rol rol = (Rol)cmbRoles.getSelectedItem();   
+            int legajo = Integer.parseInt(txtLegajo.getText().trim());
+            controladorUsuario contro = new controladorUsuario();
+        try{           
+            if (txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())){
+                
+                if (contro.actualizarUsuario(nombreUsuario, contrasenia, rol.getIdRol(), legajo)) {
+                JOptionPane.showMessageDialog(this, "El usuario se actualizó correctamente");
+                limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar el usuario");
+            }
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
+            }
+            
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, "Error al intentar actualizar el usuario");
+        }
+    }
+        
+        
+        
+       
+        
+        
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if(!txtLegajo.getText().trim().matches("[0-9]*")){
+            JOptionPane.showMessageDialog(this, "Ingresar un legajo válido");
+        }else{
+            
+            int i = JOptionPane.showConfirmDialog(this, "Se borrará el usuario seleccionado");
+        
+            if(i == 0){
+                controladorUsuario contro = new controladorUsuario();
+        try{
+              
+            int legajo = Integer.parseInt(txtLegajo.getText());
+            
+            if (contro.eliminarUsuario(legajo)) {
+                JOptionPane.showMessageDialog(this, "El usuario se ha borrado correctamente");
+                limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(this, "No se pudo borrado el usuario");
+            }
+            
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, "Error al intentar borrar el usuario");
+        }
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{
+            controladorUsuario controUsu = new controladorUsuario();
+        int comparar = Integer.parseInt(txtLegajo.getText());
+        Usuario usu = controUsu.obtenerUsuarioPorLegajo(comparar);
+        
+            if (usu != null) {
+                txtNombreusuario.setText(usu.getNombreUsuario());
+         txtContrasenia.setText(usu.getContrasenia());
+         txtRepetirContrasenia.setText(usu.getContrasenia());
+         cmbRoles.getModel().setSelectedItem(usu.getRolUsuario());
+            }else{
+                 JOptionPane.showMessageDialog(this, "Legajo no encontrado");
+                 limpiarCampos();
+            }
+        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error al encontrar usuario");
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        if(txtContrasenia.getText().trim().equals("") || txtRepetirContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || cmbRoles.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(this, "Verificar que todos los campos estén rellenados correctamente");        
+        }else{
+            if(txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())){
+                controladorUsuario control = new controladorUsuario();
+        
+            String contrasenia = txtContrasenia.getText();
+            String nombreUsuario = txtNombreusuario.getText();
+            Rol rol = (Rol)cmbRoles.getSelectedItem();                 
+            
+            Usuario usuario = new Usuario(nombreUsuario, contrasenia, rol);
+            if(control.agregarUsuario(usuario)){
+                JOptionPane.showMessageDialog(this, "Usuario cargado Correctamente");
+                limpiarCampos();
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Fallo al agregar usuario");
+            }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
+            }
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void txtLegajoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLegajoFocusLost
+        
+    }//GEN-LAST:event_txtLegajoFocusLost
 
     /**
      * @param args the command line arguments
@@ -246,12 +389,12 @@ public class CrearUsario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JComboBox<String> cmbRoles;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -259,9 +402,11 @@ public class CrearUsario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField txtContrasenia;
+    private javax.swing.JTextField txtLegajo;
+    private javax.swing.JTextField txtNombreusuario;
+    private javax.swing.JTextField txtNombreusuario1;
+    private javax.swing.JPasswordField txtRepetirContrasenia;
     // End of variables declaration//GEN-END:variables
 }
