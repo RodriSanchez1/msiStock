@@ -319,13 +319,19 @@ public class CrearUsario extends javax.swing.JFrame {
             Rol rol = (Rol)cmbRoles.getSelectedItem();                 
             
             Usuario usuario = new Usuario(nombreUsuario, contrasenia, rol);
-            if(control.agregarUsuario(usuario)){
+            if(!control.compararNombresUsuario(usuario.getNombreUsuario())){
+                if(control.agregarUsuario(usuario)){
                 JOptionPane.showMessageDialog(this, "Usuario cargado Correctamente");
                 limpiarCampos();
             }
-            else{
+                else{
                 JOptionPane.showMessageDialog(this, "Fallo al agregar usuario");
             }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe");
+            }
+            
             }
             else{
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");

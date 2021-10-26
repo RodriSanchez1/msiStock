@@ -78,6 +78,17 @@ public class controladorUsuario {
         return usuario;
     }
     
+    public boolean compararNombresUsuario(String nombre){
+         boolean existe = false;
+         ArrayList<Usuario> listaUsuario = obtenerUsuarios();
+         for (Usuario X : listaUsuario) {
+            if(X.getNombreUsuario().trim().equals(nombre)){
+                existe = true;break;
+            }
+        }         
+         return existe;
+    }
+    
     public ArrayList<Integer> obtenerLegajos(){
         ArrayList<Integer> ListaLegajos = new ArrayList<Integer>();
         try {
