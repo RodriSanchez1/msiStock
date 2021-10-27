@@ -39,7 +39,7 @@ public class FormaVenta {
 
     @Override
     public String toString() {
-        return "FormaVenta{" + "idFormaVenta=" + idFormaVenta + ", descripcion=" + descripcion + '}';
+        return  descripcion ;
     }
     
     

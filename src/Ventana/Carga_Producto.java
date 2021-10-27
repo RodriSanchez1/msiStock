@@ -122,7 +122,7 @@ public class Carga_Producto extends javax.swing.JFrame {
         getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 160, 30));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

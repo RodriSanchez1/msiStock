@@ -11,7 +11,7 @@ package Modelos;
  */
 public class Ubicacion {
     private int id;
-    private Estanteria estanteria; //PARA MI VA LUGAR DE UBICACION ACA
+    private Estanteria estanteria; 
 
     public int getId() {
         return id;
@@ -21,9 +21,17 @@ public class Ubicacion {
         this.id = id;
     }
 
+    public Estanteria getEstanteria() {
+        return estanteria;
+    }
+
   
     public Ubicacion(int id, Estanteria estanteria) {
         this.id = id;
+        this.estanteria = estanteria;
+    }
+  public Ubicacion( Estanteria estanteria) {
+        
         this.estanteria = estanteria;
     }
 
