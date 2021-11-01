@@ -38,7 +38,8 @@ public class MSIapp {
      */
     public static void main(String[] args) {
 
-        new VentanaLogin().setVisible(true);
+        new CrearUsario().setVisible(true);
+        
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
