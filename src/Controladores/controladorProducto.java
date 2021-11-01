@@ -29,7 +29,8 @@ public class controladorProducto {
     private void abrirConexion() {
 
         try {
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=easyStock", "sa", "fa");
+            //con = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=easyStock", "sa", "fa");
+            con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234"); 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

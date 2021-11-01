@@ -71,10 +71,10 @@ public class Usuario {
 
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" + "legajo=" + legajo + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + ", rol=" + rol + '}';
-    }
+    //@Override
+    //public String toString() {
+      //  return "Usuario{" + "legajo=" + legajo + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + ", rol=" + rol + '}';
+    //}
 
 
     
