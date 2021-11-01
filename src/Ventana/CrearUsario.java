@@ -25,10 +25,10 @@ public class CrearUsario extends javax.swing.JFrame {
     public CrearUsario() {
         initComponents();
         cargarRoles();
-        
+
     }
-    
-    public void cargarRoles(){
+
+    public void cargarRoles() {
         controladorRol contro = new controladorRol();
         ArrayList<Rol> lista = contro.obtenerRoles();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -38,13 +38,13 @@ public class CrearUsario extends javax.swing.JFrame {
         }
         cmbRoles.setModel(model);
     }
-    
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         txtLegajo.setText("");
         txtContrasenia.setText("");
         txtNombreusuario.setText("");
         txtRepetirContrasenia.setText("");
-   }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,128 +219,117 @@ public class CrearUsario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-    
-        
-            
-        if(txtContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || txtLegajo.getText().trim().equals("") || !txtLegajo.getText().trim().matches("[0-9]*") || cmbRoles.getSelectedItem() == null){
+
+        if (txtContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || txtLegajo.getText().trim().equals("") || !txtLegajo.getText().trim().matches("[0-9]*") || cmbRoles.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Verificar que todos los campos estén rellenados correctamente");
-            
-        }else{
+        } else {
             String contrasenia = txtContrasenia.getText().trim();
             String nombreUsuario = txtNombreusuario.getText().trim();
-            Rol rol = (Rol)cmbRoles.getSelectedItem();   
+            Rol rol = (Rol) cmbRoles.getSelectedItem();
             int legajo = Integer.parseInt(txtLegajo.getText().trim());
             controladorUsuario contro = new controladorUsuario();
-        try{           
-            if (txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())){
-                
-                if (contro.actualizarUsuario(nombreUsuario, contrasenia, rol.getIdRol(), legajo)) {
-                JOptionPane.showMessageDialog(this, "El usuario se actualizó correctamente");
-                limpiarCampos();
-            }else{
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar el usuario");
+            try {
+                if (txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())) {
+
+                    if (contro.actualizarUsuario(nombreUsuario, contrasenia, rol.getIdRol(), legajo)) {
+                        JOptionPane.showMessageDialog(this, "El usuario se actualizó correctamente");
+                        limpiarCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se pudo actualizar el usuario");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al intentar actualizar el usuario");
             }
-                
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
-            }
-            
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this, "Error al intentar actualizar el usuario");
         }
-    }
-        
-        
-        
-       
-        
-        
+
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if(!txtLegajo.getText().trim().matches("[0-9]*")){
+        if (!txtLegajo.getText().trim().matches("[0-9]*")) {
             JOptionPane.showMessageDialog(this, "Ingresar un legajo válido");
-        }else{
-            
+        } else {
+
             int i = JOptionPane.showConfirmDialog(this, "Se borrará el usuario seleccionado");
-        
-            if(i == 0){
+
+            if (i == 0) {
                 controladorUsuario contro = new controladorUsuario();
-        try{
-              
-            int legajo = Integer.parseInt(txtLegajo.getText());
-            
-            if (contro.eliminarUsuario(legajo)) {
-                JOptionPane.showMessageDialog(this, "El usuario se ha borrado correctamente");
-                limpiarCampos();
-            }else{
-                JOptionPane.showMessageDialog(this, "No se pudo borrado el usuario");
-            }
-            
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this, "Error al intentar borrar el usuario");
-        }
+                try {
+
+                    int legajo = Integer.parseInt(txtLegajo.getText());
+
+                    if (contro.eliminarUsuario(legajo)) {
+                        JOptionPane.showMessageDialog(this, "El usuario se ha borrado correctamente");
+                        limpiarCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se pudo borrado el usuario");
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error al intentar borrar el usuario");
+                }
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try{
+        try {
             controladorUsuario controUsu = new controladorUsuario();
-        int comparar = Integer.parseInt(txtLegajo.getText());
-        Usuario usu = controUsu.obtenerUsuarioPorLegajo(comparar);
-        
+            int comparar = Integer.parseInt(txtLegajo.getText());
+            Usuario usu = controUsu.obtenerUsuarioPorLegajo(comparar);
+
             if (usu != null) {
                 txtNombreusuario.setText(usu.getNombreUsuario());
-         txtContrasenia.setText(usu.getContrasenia());
-         txtRepetirContrasenia.setText(usu.getContrasenia());
-         cmbRoles.getModel().setSelectedItem(usu.getRolUsuario());
-            }else{
-                 JOptionPane.showMessageDialog(this, "Legajo no encontrado");
-                 limpiarCampos();
+                txtContrasenia.setText(usu.getContrasenia());
+                txtRepetirContrasenia.setText(usu.getContrasenia());
+                cmbRoles.getModel().setSelectedItem(usu.getRolUsuario());
+            } else {
+                JOptionPane.showMessageDialog(this, "Legajo no encontrado");
+                limpiarCampos();
             }
-        
-        }catch(Exception e){
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al encontrar usuario");
             limpiarCampos();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        if(txtContrasenia.getText().trim().equals("") || txtRepetirContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || cmbRoles.getSelectedItem() == null){
-            JOptionPane.showMessageDialog(this, "Verificar que todos los campos estén rellenados correctamente");        
-        }else{
-            if(txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())){
+        if (txtContrasenia.getText().trim().equals("") || txtRepetirContrasenia.getText().trim().equals("") || txtNombreusuario.getText().trim().equals("") || cmbRoles.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Verificar que todos los campos estén rellenados correctamente");
+        } else {
+            if (txtContrasenia.getText().trim().equals(txtRepetirContrasenia.getText().trim())) {
                 controladorUsuario control = new controladorUsuario();
-        
-            String contrasenia = txtContrasenia.getText();
-            String nombreUsuario = txtNombreusuario.getText();
-            Rol rol = (Rol)cmbRoles.getSelectedItem();                 
-            
-            Usuario usuario = new Usuario(nombreUsuario, contrasenia, rol);
-            if(!control.compararNombresUsuario(usuario.getNombreUsuario())){
-                if(control.agregarUsuario(usuario)){
-                JOptionPane.showMessageDialog(this, "Usuario cargado Correctamente");
-                limpiarCampos();
-            }
-                else{
-                JOptionPane.showMessageDialog(this, "Fallo al agregar usuario");
-            }
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe");
-            }
-            
-            }
-            else{
+
+                String contrasenia = txtContrasenia.getText();
+                String nombreUsuario = txtNombreusuario.getText();
+                Rol rol = (Rol) cmbRoles.getSelectedItem();
+
+                Usuario usuario = new Usuario(nombreUsuario, contrasenia, rol);
+                if (!control.compararNombresUsuario(usuario.getNombreUsuario())) {
+                    if (control.agregarUsuario(usuario)) {
+                        JOptionPane.showMessageDialog(this, "Usuario cargado Correctamente");
+                        limpiarCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Fallo al agregar usuario");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El nombre de usuario ya existe");
+                }
+
+            } else {
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
             }
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtLegajoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLegajoFocusLost
-        
+
     }//GEN-LAST:event_txtLegajoFocusLost
 
     /**
