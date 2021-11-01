@@ -5,6 +5,7 @@
  */
 package Modelos;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -18,6 +19,7 @@ public class Remito {
     private Date fecha;
     private int tipoMovimiento; 
     private int legajoUsuario;
+    private ArrayList<DetalleRemito> detalle;
 
     public int getNroRemito() {
         return nroRemito;
@@ -51,34 +53,23 @@ public class Remito {
         this.legajoUsuario = legajoUsuario;
     }
 
-    public Remito(int nroRemito, Date fecha, int tipoMovimiento, int legajoUsuario) {
+    public Remito(int nroRemito, Date fecha, int tipoMovimiento, int legajoUsuario, ArrayList<DetalleRemito> detalle) {
         this.nroRemito = nroRemito;
         this.fecha = fecha;
         this.tipoMovimiento = tipoMovimiento;
         this.legajoUsuario = legajoUsuario;
+        this.detalle = detalle;
     }
 
     public Remito() {
     }
-    
-    public String verTipoMovimiento(){
-        String tipo;
-        switch(tipoMovimiento){
-            case 1: tipo = "Entrada";
-            break;
-            default: tipo = "Salida";
-            break;
-            
-        }
-        return tipo;
-        
-    }
 
     @Override
     public String toString() {
-        return "Remito{" + "nroRemito=" + nroRemito + ", fecha=" + fecha + ", tipoMovimiento=" + tipoMovimiento + ", legajoUsuario=" + legajoUsuario + '}';
+        return "Remito{" + "nroRemito=" + nroRemito + ", fecha=" + fecha + ", tipoMovimiento=" + tipoMovimiento + ", legajoUsuario=" + legajoUsuario + ", detalle=" + detalle + '}';
     }
-    
+
+   
     
     
 }

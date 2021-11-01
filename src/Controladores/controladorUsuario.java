@@ -52,7 +52,7 @@ public class controladorUsuario {
                 String nombre = rs.getString("nombre");
                 String contrasenia = rs.getString("contrasenia");
                 int rol = rs.getInt("idRol");
-                Usuario usuario = new Usuario (legajo, nombre, contrasenia, rol);
+                //Usuario usuario = new Usuario (legajo, nombre, contrasenia, rol);
                 ListaUsuarios.add(usuario);
             }
         } catch (SQLException ex) {

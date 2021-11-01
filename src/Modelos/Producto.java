@@ -13,23 +13,11 @@ public class Producto {
     private int codigo;
     private String nombreProducto;
     private int stockMinimo;
-    private String rubro;
-    private String marca;
-    private String formatoVenta; //esto es otra clase y va por composicion.
+    private Marca marca;
+    private Rubro rubro;
+    private FormatoVenta formatoVenta; 
     private String tamanio;
-
-    public Producto(int codigo, String nombreProducto, int stockMinimo, String rubro, String marca, String formatoVenta, String tamanio) {
-        this.codigo = codigo;
-        this.nombreProducto = nombreProducto;
-        this.stockMinimo = stockMinimo;
-        this.rubro = rubro;
-        this.marca = marca;
-        this.formatoVenta = formatoVenta;
-        this.tamanio = tamanio;
-    }
-
-    public Producto() {
-    }
+    
 
     public int getCodigo() {
         return codigo;
@@ -55,28 +43,16 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
-    public String getRubro() {
-        return rubro;
-    }
-
-    public void setRubro(String rubro) {
-        this.rubro = rubro;
-    }
-
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public Rubro getRubro() {
+        return rubro;
     }
 
-    public String getFormatoVenta() {
+    public FormatoVenta getFormatoVenta() {
         return formatoVenta;
-    }
-
-    public void setFormatoVenta(String formatoVenta) {
-        this.formatoVenta = formatoVenta;
     }
 
     public String getTamanio() {
@@ -86,8 +62,29 @@ public class Producto {
     public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
     }
-    
-    
+
+    public Producto(int codigo, String nombreProducto, int stockMinimo, Marca marca, Rubro rubro, FormatoVenta formatoVenta, String tamanio) {
+        this.codigo = codigo;
+        this.nombreProducto = nombreProducto;
+        this.stockMinimo = stockMinimo;
+        this.marca = marca;
+        this.rubro = rubro;
+        this.formatoVenta = formatoVenta;
+        this.tamanio = tamanio;
+    }
+
+    public Producto(int codigo, String nombreProducto) {
+        this.codigo = codigo;
+        this.nombreProducto = nombreProducto;
+    }
+
+    @Override
+    public String toString() {
+        return nombreProducto ;
+    }
+
+ 
+
     
     
 }

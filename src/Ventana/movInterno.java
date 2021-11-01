@@ -5,16 +5,32 @@
  */
 package Ventana;
 
+import Controladores.controladorProducto;
 import Controladores.controladorRemitoInterno;
+import DTO.dtoDetalleRemito;
+import DTO.dtoStockUbicacion;
+import Modelos.DetalleRemito;
+import Modelos.FormaVenta;
+import Modelos.Producto;
+import Modelos.Remito;
+import Modelos.Stock;
 import Modelos.TipoMovimiento;
+import Modelos.Usuario;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.text.TableView;
 
 /**
@@ -22,9 +38,21 @@ import javax.swing.text.TableView;
  * @author ginin
  */
 public class movInterno extends javax.swing.JFrame {
+
     controladorRemitoInterno controlador = new controladorRemitoInterno();
+
+    private static final int PRODUCT_COLUMN = 0;
+    private static final int BOOLEAN_COLUMN = 1;
+    private static final int CANTIDAD_COLUMN = 2;
+    private static final int DISPONIBILIDAD_COLUMN = 3;
+    private DefaultTableModel model;
+    Usuario user = null;
+    boolean tipoMovimiento = false; //Entrada
+    ArrayList<dtoStockUbicacion> listaStock;
+
     /**
      * Creates new form Carga_Producto
+     *
      * @param rol
      */
     public movInterno(String rol) {
@@ -32,18 +60,55 @@ public class movInterno extends javax.swing.JFrame {
         initComponents();
         fillComboTipoRemito();
         fillTableDetalleRemito();
+        setNroRemito();
+        Date date = new Date();
+        jDateChooser1.setDate(date);
+        Date fecha = jDateChooser1.getDate();
+        System.out.println(fecha);
+        addTableListener();
+        if (!tipoMovimiento) {
+            listaStock = controlador.obtenerStock();
+        }
+
+    }
+
+    private void addTableListener() {
         tableDetalleRemito.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                System.out.println("Holas");
-                if (e.getType() == TableModelEvent.UPDATE) {
-                    DefaultTableModel model = (DefaultTableModel) tableDetalleRemito.getModel();
-                    model.addRow(new Object[]{null, null, null});
+//                if (e.getType() == TableModelEvent.UPDATE) {
+//                    //DefaultTableModel modelo = (DefaultTableModel) tableDetalleRemito.getModel();
+//                    model.addRow(new Object[]{null, false, 0});
+//                }
+                int row = e.getFirstRow();
+                int column = e.getColumn();
+                if (column == BOOLEAN_COLUMN) {
+                    TableModel model = (TableModel) e.getSource();
+                    String columnName = model.getColumnName(column);
+                    Boolean checked = (Boolean) model.getValueAt(row, column);
+                    if (checked) {
+                        System.out.println(columnName + ": " + true);
+                    } else {
+                        System.out.println(columnName + ": " + false);
+                    }
+                }
+                if (column == PRODUCT_COLUMN && !tipoMovimiento || column == BOOLEAN_COLUMN && !tipoMovimiento) {
+                    System.out.println("Entro para modificar disponibilidad");
+                    TableModel model = (TableModel) e.getSource();
+                    Producto producto = (Producto) model.getValueAt(row, PRODUCT_COLUMN);
+                    FormaVenta formaVenta = (boolean) model.getValueAt(row, BOOLEAN_COLUMN) ? new FormaVenta(1, "online") : new FormaVenta(2, "presencial");
+                    int cantidadTotal= 0;
+                    for (dtoStockUbicacion stock : listaStock) {
+                        if (producto != null && stock.getCodProducto() == producto.getCodigo() && stock.getIdFormaVenta() == formaVenta.getIdFormaVenta()) {
+                            //System.out.println(stock.getCantidad());
+                            cantidadTotal += stock.getCantidad();   
+                        }
+                    }
+                    model.setValueAt(cantidadTotal, row, DISPONIBILIDAD_COLUMN);
                 }
             }
         });
     }
-
 //     private void fillComboHabitaciones() {
 //        ControladorHabitacion controlador = new ControladorHabitacion();
 //        DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -53,50 +118,69 @@ public class movInterno extends javax.swing.JFrame {
 //        }
 //        cmbHabitaciones.setModel(model);
 //    }
+
     private void fillComboTipoRemito() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         ArrayList<TipoMovimiento> lista = new ArrayList<>();
-        lista.add(new TipoMovimiento(1, "Online"));
-        lista.add(new TipoMovimiento(2, "Presencial"));
+        lista.add(new TipoMovimiento(1, "Entrada"));
+        lista.add(new TipoMovimiento(2, "Salida"));
         for (TipoMovimiento item : lista) {
             model.addElement(item);
         }
         cmbTipoMovimiento.setModel(model);
     }
-//     private void fillComboOrigen() {
-//        DefaultComboBoxModel model = new DefaultComboBoxModel();
-//        ArrayList<TipoMovimiento> lista = new ArrayList<>();
-//        lista.add(new TipoMovimiento(1,"Entrada"));
-//        lista.add(new TipoMovimiento(2,"Salida"));
-//        for (TipoMovimiento item : lista) {
-//            model.addElement(item);
-//        }
-//        cmbOrigenMov.setModel(model);
-//    }
 
     private void fillTableDetalleRemito() {
         // ArrayList<Servicio> lista = controlador.obtenerServiciosXHabitacion((Habitacion) cmbHabitaciones.getSelectedItem());
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Producto", "Forma de venta", "Cantidad"});
-        model.addRow(new Object[]{null, null, null});
+        model = new DefaultTableModel() {
+            @Override
+            public Class getColumnClass(int column) {
+                switch (column) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return Boolean.class;
+                    case 2:
+                        return Integer.class;
+                    case 3:
+                        return Integer.class;
+                    default:
+                        return String.class;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == PRODUCT_COLUMN|| column == BOOLEAN_COLUMN || column == CANTIDAD_COLUMN;
+            }
+        ;
+        };
+        if (tipoMovimiento) {
+            model.setColumnIdentifiers(new String[]{"Producto", "Online", "Cantidad"});
+            model.addRow(new Object[]{null, false, 0});
+        } else {
+            model.setColumnIdentifiers(new String[]{"Producto", "Online", "Cantidad", "Disponible"});
+            model.addRow(new Object[]{null, false, 0, 0});
+        }
         tableDetalleRemito.setModel(model);
         TableColumn testColumn = tableDetalleRemito.getColumnModel().getColumn(0);
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.addItem("Asia");
-        comboBox.addItem("Europe");
-        comboBox.addItem("North America");
-        comboBox.addItem("South America");
-        comboBox.addItem("Africa");
-        comboBox.addItem("Antartica");
-        comboBox.addItem("Australia");
+        controladorProducto controlador = new controladorProducto();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<Producto> lista = controlador.obtenerProductos();
+        for (Producto producto : lista) {
+            model.addElement(producto);
+        }
+        comboBox.setModel(model);
         testColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
 //        for (Servicio row : lista) {
 //            model.addRow(new Object[]{row.getConcepto(),row.getImporte()});
 //        }
     }
-    private void setNroRemito(){
-       nroRemito.setText(String.valueOf(controlador.obtenerNroRemitoSiguiente()));
+
+    private void setNroRemito() {
+        nroRemito.setText(String.valueOf(controlador.obtenerNroRemitoSiguiente()));
     }
 
     /**
@@ -112,19 +196,17 @@ public class movInterno extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        cmbOrigenMov = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDetalleRemito = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         nroRemito = new javax.swing.JLabel();
         cmbTipoMovimiento = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,22 +236,13 @@ public class movInterno extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel2.setText("Motivo:");
+        jLabel2.setText("Número de remito:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Venta presencial" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
-
-        cmbOrigenMov.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ventas" }));
-        getContentPane().add(cmbOrigenMov, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 100, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 0));
         jLabel3.setText("Tipo Movimiento:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "05/10/2021" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 110, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
         tableDetalleRemito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,21 +254,16 @@ public class movInterno extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableDetalleRemito);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 510, 200));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 580, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 0));
         jLabel6.setText("Fecha:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, 30));
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 0, 0));
-        jLabel7.setText("Origen/Destino:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, 20));
 
         nroRemito.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         nroRemito.setText("0");
-        getContentPane().add(nroRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, -1, 20));
+        getContentPane().add(nroRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 40, 20));
 
         cmbTipoMovimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Salida" }));
         cmbTipoMovimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -203,19 +271,34 @@ public class movInterno extends javax.swing.JFrame {
                 cmbTipoMovimientoActionPerformed(evt);
             }
         });
-        getContentPane().add(cmbTipoMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 100, -1));
+        getContentPane().add(cmbTipoMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 100, -1));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 0, 0));
         jLabel9.setText("Usuario:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
         jLabel4.setText("user");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 110, -1));
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel10.setText("Número de remito:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, 20));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mas.png"))); // NOI18N
+        jButton1.setText("Agregar producto");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 160, 30));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/menos (2).png"))); // NOI18N
+        jButton4.setText("  Eliminar producto");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 260, 160, 30));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -224,12 +307,66 @@ public class movInterno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+
+        Remito nvoRemito = new Remito();
+        Date fecha = jDateChooser1.getDate();
+        TipoMovimiento tipoMovimiento = (TipoMovimiento) cmbTipoMovimiento.getSelectedItem();
+        ArrayList<dtoDetalleRemito> listaDetalle = new ArrayList();
+        try {
+            if (tableDetalleRemito.getRowCount() != 0) {
+                for (int i = 0; i < tableDetalleRemito.getRowCount(); i++) {
+                    Producto producto = null;
+                    producto = (Producto) tableDetalleRemito.getValueAt(i, 0);
+                    System.out.println(producto);
+                    if (null == producto) {
+                        throw new Error("Seleccione un producto");
+                    }
+                    boolean isOnline = (boolean) tableDetalleRemito.getValueAt(i, 1);
+                    FormaVenta formaVenta;
+                    formaVenta = isOnline ? new FormaVenta(1, "online") : new FormaVenta(2, "presencial");
+                    int cantidad = (Integer) tableDetalleRemito.getValueAt(i, 2);
+                    if (cantidad <= 0) {
+                        throw new Error("La cantidad debe ser mayor a 0");
+                    }
+                    listaDetalle.add(new dtoDetalleRemito(cantidad, producto, formaVenta));
+                }
+            } else {
+                throw new Error("Debe agregar por lo menos un producto");
+            }
+
+            controladorRemitoInterno controlador = new controladorRemitoInterno();
+            controlador.insertarNuevoRemito(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+            model.setRowCount(0);
+            ImageIcon icon = new ImageIcon("src/Imagenes/mas.png");
+            JOptionPane.showMessageDialog(null, "Remito cargado exitosamente",
+                    "Confirmación", JOptionPane.INFORMATION_MESSAGE, icon);
+        } catch (Error e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(movInterno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(listaDetalle);
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmbTipoMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoMovimientoActionPerformed
         // TDO add your handling code here:
     }//GEN-LAST:event_cmbTipoMovimientoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        model.addRow(new Object[]{null, false, 0});
+     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int numRows = tableDetalleRemito.getSelectedRows().length;
+        for (int i = 0; i < numRows; i++) {
+            model.removeRow(tableDetalleRemito.getSelectedRow());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,19 +374,17 @@ public class movInterno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JComboBox<String> cmbOrigenMov;
     private javax.swing.JComboBox<String> cmbTipoMovimiento;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton jButton4;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nroRemito;

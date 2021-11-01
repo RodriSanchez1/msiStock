@@ -9,17 +9,16 @@ package Modelos;
  *
  * @author Flor
  */
-public class LugarUbicacion {
-    private int codigo;
+public class Rol {
+    private int idRol;
     private String nombre;
-    private Sector sector;
 
-    public int getCodigo() {
-        return codigo;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     public String getNombre() {
@@ -30,20 +29,17 @@ public class LugarUbicacion {
         this.nombre = nombre;
     }
 
-  
-
-    public LugarUbicacion(int codigo, String nombre, Sector sector) {
-        this.codigo = codigo;
+    public Rol(int idRol, String nombre) {
+        this.idRol = idRol;
         this.nombre = nombre;
-        this.sector = sector;
     }
 
-    public LugarUbicacion() {
+    public Rol() {
     }
 
     @Override
     public String toString() {
-        return "LugarUbicacion{" + "codigo=" + codigo + ", nombre=" + nombre + ", sector=" + sector + '}';
+        return "Rol{" + "idRol=" + idRol + ", nombre=" + nombre + '}';
     }
     
     
