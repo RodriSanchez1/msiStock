@@ -7,11 +7,21 @@ package Modelos;
 
 /**
  *
- * @author Flor
+
+ * @author Alex
  */
 public class Rol {
-    private int idRol;
-    private String nombre;
+    public int idRol;
+    public String nombre;
+
+    public Rol(int idRol, String rol) {
+        this.idRol = idRol;
+        this.nombre = rol;
+    }
+
+    public Rol() {
+    }
+
 
     public int getIdRol() {
         return idRol;
@@ -21,26 +31,17 @@ public class Rol {
         this.idRol = idRol;
     }
 
-    public String getNombre() {
+    public String getRol() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void setRol(String rol) {
+        this.nombre = rol;
 
-    public Rol(int idRol, String nombre) {
-        this.idRol = idRol;
-        this.nombre = nombre;
-    }
-
-    public Rol() {
     }
 
     @Override
     public String toString() {
-        return "Rol{" + "idRol=" + idRol + ", nombre=" + nombre + '}';
+        return   idRol + "-" + nombre;
     }
-    
-    
 }

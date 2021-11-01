@@ -73,9 +73,21 @@ public class Producto {
         this.tamanio = tamanio;
     }
 
+    public Producto(String nombreProducto, int stockMinimo, Marca marca, Rubro rubro, FormatoVenta formatoVenta, String tamanio) {
+        this.nombreProducto = nombreProducto;
+        this.stockMinimo = stockMinimo;
+        this.marca = marca;
+        this.rubro = rubro;
+        this.formatoVenta = formatoVenta;
+        this.tamanio = tamanio;
+    }
+
     public Producto(int codigo, String nombreProducto) {
         this.codigo = codigo;
         this.nombreProducto = nombreProducto;
+    }
+
+    public Producto() {
     }
 
     @Override

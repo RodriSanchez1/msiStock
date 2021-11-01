@@ -5,6 +5,11 @@
  */
 package Ventana;
 
+import Controladores.controladorUsuario;
+import Modelos.Usuario;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ginin
@@ -28,11 +33,11 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        txtContrasenia = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        btnIngresar = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -42,6 +47,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 200, 30));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 0));
@@ -53,22 +59,15 @@ public class VentanaLogin extends javax.swing.JFrame {
         jLabel5.setText("Contraseña:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, 90, 30));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 200, 30));
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 200, 30));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, 90, 30));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 200, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventana/maxresdefault.jpg"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -86,9 +85,43 @@ public class VentanaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        if (txtContrasenia.getText().trim().equals("") || txtNombre.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre y una contraseña");
+        }else{
+            controladorUsuario contro = new controladorUsuario();
+            ArrayList<Usuario> listaUsuarios = contro.obtenerUsuarios();
+            Usuario usu = null;
+            boolean login=false;
+            
+            for (Usuario X : listaUsuarios) {
+                if(txtNombre.getText().trim().equals(X.getNombreUsuario())){
+                    if(txtContrasenia.getText().trim().equals(X.getContrasenia())){
+                        usu = X;
+                        login=true;
+                    }
+                }
+                
+            }
+            
+            if(login){
+                JOptionPane.showMessageDialog(this, "Login correcto. Redireccionando...");
+                        
+                        switch(usu.getRolUsuario().getIdRol()){
+                            case 1: new CrearUsario().setVisible(true);break;
+                            case 2: new Disponibilidad_Producto().setVisible(true);break;
+                            case 3: new Listado_Productos().setVisible(true);break;
+                            case 4: new Modificar_Ubicacion_Producto().setVisible(true);break;
+                            case 5: new Listado_Faltantes_Productos().setVisible(true);break;
+                            case 6: new Carga_Producto().setVisible(true);break;
+                            case 7: new Ubicar_Producto().setVisible(true);break;
+                            default: JOptionPane.showMessageDialog(this, "Error al redireccionar. Intente de nuevo.");
+                        }
+            }else{
+                    JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
+                }
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new movInterno("1").setVisible(true);
@@ -97,14 +130,14 @@ public class VentanaLogin extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPasswordField txtContrasenia;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
