@@ -60,8 +60,8 @@ public class controladorUsuario {
                 ListaUsuarios.add(usuario);
             }
         } catch (SQLException ex) {
-            System.out.println(ex);;
-        } finally {
+            System.out.println(ex);
+        }finally{
             cerrarConexion();
         }
         return ListaUsuarios;

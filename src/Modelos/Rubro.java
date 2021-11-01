@@ -39,7 +39,7 @@ public class Rubro {
 
     @Override
     public String toString() {
-        return "Rubro{" + "idRubro=" + idRubro + ", nombre=" + nombre + '}';
+        return  nombre;
     }
     
     
