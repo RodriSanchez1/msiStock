@@ -9,7 +9,7 @@ package Modelos;
  *
  * @author Flor
  */
-public class tipoMovimiento {
+public class TipoMovimiento {
     private int id;
     private String nombre;
 
@@ -29,17 +29,17 @@ public class tipoMovimiento {
         this.nombre = nombre;
     }
 
-    public tipoMovimiento(int id, String nombre) {
+    public TipoMovimiento(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public tipoMovimiento() {
+    public TipoMovimiento() {
     }
 
     @Override
     public String toString() {
-        return "tipoMovimiento{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "TipoMovimiento{" + "id=" + id + ", nombre=" + nombre + '}';
     }
     
 }

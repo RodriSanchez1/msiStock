@@ -13,6 +13,7 @@ public class Usuario {
     private int legajo;
     private String nombreUsuario;
     private String contrasenia;
+
     private Rol rolUsuario;
 
     @Override
@@ -67,8 +68,15 @@ public class Usuario {
 
     public void setRolUsuario(Rol rolUsuario) {
         this.rolUsuario = rolUsuario;
+
     }
-    
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "legajo=" + legajo + ", nombreUsuario=" + nombreUsuario + ", contrasenia=" + contrasenia + ", rol=" + rol + '}';
+    }
+
+
     
 }
 

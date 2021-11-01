@@ -7,6 +7,7 @@ package Modelos;
 
 /**
  *
+
  * @author Alex
  */
 public class Rol {
@@ -20,6 +21,7 @@ public class Rol {
 
     public Rol() {
     }
+
 
     public int getIdRol() {
         return idRol;
@@ -35,12 +37,11 @@ public class Rol {
 
     public void setRol(String rol) {
         this.nombre = rol;
+
     }
 
     @Override
     public String toString() {
         return   idRol + "-" + nombre;
     }
-    
-    
 }

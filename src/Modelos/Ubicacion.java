@@ -21,14 +21,7 @@ public class Ubicacion {
         this.id = id;
     }
 
-    public Estanteria getEstanteria() {
-        return estanteria;
-    }
-
-    public void setEstanteria(Estanteria estanteria) {
-        this.estanteria = estanteria;
-    }
-
+  
     public Ubicacion(int id, Estanteria estanteria) {
         this.id = id;
         this.estanteria = estanteria;
