@@ -107,16 +107,8 @@ public class VentanaLogin extends javax.swing.JFrame {
             if(login){
                 JOptionPane.showMessageDialog(this, "Login correcto. Redireccionando...");
                         
-                        switch(usu.getRolUsuario().getIdRol()){
-                            case 1: new CrearUsario().setVisible(true);break;
-                            case 2: new Disponibilidad_Producto().setVisible(true);break;
-                            case 3: new Listado_Productos().setVisible(true);break;
-                            case 4: new Modificar_Ubicacion_Producto().setVisible(true);break;
-                            case 5: new Listado_Faltantes_Productos().setVisible(true);break;
-                            case 6: new Carga_Producto().setVisible(true);break;
-                            case 7: new Ubicar_Producto().setVisible(true);break;
-                            default: JOptionPane.showMessageDialog(this, "Error al redireccionar. Intente de nuevo.");
-                        }
+                menuPrincipal menuPrincipal = new menuPrincipal(usu);
+                menuPrincipal.setVisible(true);
             }else{
                     JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
                 }

@@ -76,7 +76,7 @@ public class CrearUsario extends javax.swing.JFrame {
         txtNombreusuario1 = new javax.swing.JTextField();
         jPasswordField2 = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(102, 0, 0));
