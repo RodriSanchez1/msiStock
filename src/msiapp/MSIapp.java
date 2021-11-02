@@ -39,6 +39,7 @@ public class MSIapp {
     public static void main(String[] args) {
 
         new CrearUsario().setVisible(true);
+        new movInterno("admin").setVisible(true);
         
 
         try {
