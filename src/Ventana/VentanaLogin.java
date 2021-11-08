@@ -86,38 +86,38 @@ public class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        if (txtContrasenia.getText().trim().equals("") || txtNombre.getText().trim().equals("")){
+        if (txtContrasenia.getText().trim().equals("") || txtNombre.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre y una contraseña");
-        }else{
+        } else {
             controladorUsuario contro = new controladorUsuario();
             ArrayList<Usuario> listaUsuarios = contro.obtenerUsuarios();
             Usuario usu = null;
-            boolean login=false;
-            
+            boolean login = false;
+
             for (Usuario X : listaUsuarios) {
-                if(txtNombre.getText().trim().equals(X.getNombreUsuario())){
-                    if(txtContrasenia.getText().trim().equals(X.getContrasenia())){
+                if (txtNombre.getText().trim().equals(X.getNombreUsuario())) {
+                    if (txtContrasenia.getText().trim().equals(X.getContrasenia())) {
                         usu = X;
-                        login=true;
+                        login = true;
                     }
                 }
-                
+
             }
-            
-            if(login){
+
+            if (login) {
                 JOptionPane.showMessageDialog(this, "Login correcto. Redireccionando...");
-                        
+                this.dispose();
                 menuPrincipal menuPrincipal = new menuPrincipal(usu);
                 menuPrincipal.setVisible(true);
-            }else{
-                    JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
-                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
+            }
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new movInterno("1").setVisible(true);
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
