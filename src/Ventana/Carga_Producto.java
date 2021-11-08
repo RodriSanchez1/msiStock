@@ -108,7 +108,7 @@ public class Carga_Producto extends javax.swing.JFrame {
         btnModificarProducto.setForeground(new java.awt.Color(255, 255, 0));
         btnModificarProducto.setText("Modificar");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 3, 24)); // NOI18N
@@ -238,7 +238,7 @@ public class Carga_Producto extends javax.swing.JFrame {
         getContentPane().add(btnModificarProducto2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, 100, 30));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, -1));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
