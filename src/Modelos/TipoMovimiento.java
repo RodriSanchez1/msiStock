@@ -39,7 +39,7 @@ public class TipoMovimiento {
 
     @Override
     public String toString() {
-        return "TipoMovimiento{" + "id=" + id + ", nombre=" + nombre + '}';
+        return nombre;
     }
     
 }

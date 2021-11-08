@@ -5,6 +5,7 @@
  */
 package Modelos;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -18,7 +19,7 @@ public class Remito {
     private Date fecha;
     private int tipoMovimiento; 
     private int legajoUsuario;
-    private DetalleRemito detalle;
+    private ArrayList<DetalleRemito> detalle;
 
     public int getNroRemito() {
         return nroRemito;
@@ -52,7 +53,7 @@ public class Remito {
         this.legajoUsuario = legajoUsuario;
     }
 
-    public Remito(int nroRemito, Date fecha, int tipoMovimiento, int legajoUsuario, DetalleRemito detalle) {
+    public Remito(int nroRemito, Date fecha, int tipoMovimiento, int legajoUsuario, ArrayList<DetalleRemito> detalle) {
         this.nroRemito = nroRemito;
         this.fecha = fecha;
         this.tipoMovimiento = tipoMovimiento;

@@ -92,7 +92,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "codigo=" + codigo + ", nombreProducto=" + nombreProducto + ", stockMinimo=" + stockMinimo + ", marca=" + marca + ", rubro=" + rubro + ", formatoVenta=" + formatoVenta + ", tamanio=" + tamanio + '}';
+        return nombreProducto ;
     }
 
  
