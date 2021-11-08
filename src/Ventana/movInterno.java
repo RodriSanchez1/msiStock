@@ -53,7 +53,7 @@ public class movInterno extends javax.swing.JFrame {
     private static final int UBICACION_COLUMN = 5;
     private DefaultTableModel model;
     Usuario user = null;
-    boolean tipoMovimiento = false; //Entrada
+    boolean tipoMovimiento = false; //Siempre de salida
     ArrayList<dtoStockUbicacion> listaStock;
 
     /**
@@ -61,16 +61,22 @@ public class movInterno extends javax.swing.JFrame {
      *
      * @param rol
      */
-    public movInterno(String rol) {
-        System.out.println(rol);
+    public movInterno(Usuario user) {
+       // System.out.println(rol);
         initComponents();
+        this.user = user;
+        String nameUser = user.getNombreUsuario()+ " Rol: " + user.getRolUsuario().nombre;
+        usertxt.setText(nameUser);
+        if(user.getRolUsuario().idRol == 5){
+            tipoMovimiento = true;
+        }
         fillComboTipoRemito();
         fillTableDetalleRemito();
         setNroRemito();
         Date date = new Date();
         jDateChooser1.setDate(date);
         Date fecha = jDateChooser1.getDate();
-        System.out.println(fecha);
+       // System.out.println(fecha);
         addTableListener();
         if (!tipoMovimiento) {
             listaStock = controlador.obtenerStock();
@@ -278,13 +284,14 @@ public class movInterno extends javax.swing.JFrame {
         nroRemito = new javax.swing.JLabel();
         cmbTipoMovimiento = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        usertxt = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 3, 24)); // NOI18N
@@ -329,7 +336,7 @@ public class movInterno extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableDetalleRemito);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 840, 210));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 870, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 0));
@@ -353,8 +360,8 @@ public class movInterno extends javax.swing.JFrame {
         jLabel9.setText("Usuario:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, -1));
 
-        jLabel4.setText("user");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
+        usertxt.setText("user");
+        getContentPane().add(usertxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 110, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mas.png"))); // NOI18N
@@ -364,7 +371,7 @@ public class movInterno extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 160, 30));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, 160, 30));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/menos (2).png"))); // NOI18N
         jButton4.setText("  Eliminar producto");
@@ -373,9 +380,9 @@ public class movInterno extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 260, 160, 30));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 160, 30));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cargaMovInterno.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -431,6 +438,7 @@ public class movInterno extends javax.swing.JFrame {
                 listaStock = controlador.obtenerStock();
             }
             model.setRowCount(0);
+            setNroRemito();
             ImageIcon icon = new ImageIcon("src/Imagenes/mas.png");
             JOptionPane.showMessageDialog(null, "Remito cargado exitosamente",
                     "Confirmación", JOptionPane.INFORMATION_MESSAGE, icon);
@@ -481,11 +489,11 @@ public class movInterno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nroRemito;
     private javax.swing.JTable tableDetalleRemito;
+    private javax.swing.JLabel usertxt;
     // End of variables declaration//GEN-END:variables
 }
