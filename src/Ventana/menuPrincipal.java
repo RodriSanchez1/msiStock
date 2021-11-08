@@ -17,40 +17,48 @@ public class menuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form Carga_Producto
      */
-    
+    private Usuario usu;
+
     public menuPrincipal() {
         initComponents();
-        
+
         deshabilitarBotones();
 
     }
-    
+
     public menuPrincipal(Usuario usu) {
         initComponents();
-
+        this.usu = usu;
         deshabilitarBotones();
 
         switch (usu.getRolUsuario().getIdRol()) {
             case 1: {
                 btnAdmin.setEnabled(true);
-            }break;
+                break;
+            }
             case 2: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
                 btnVend3.setEnabled(true);
-            }break;
+                break;
+            }
             case 3: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
                 btnVend3.setEnabled(true);
-            }break;
-            case 4:{btnRep1.setEnabled(true);
-                    btnRep2.setEnabled(true);}break;
-            case 5:{
+                break;
+            }
+            case 4: {
+                btnRep1.setEnabled(true);
+                btnRep2.setEnabled(true);
+                break;
+            }
+            case 5: {
                 btnAuxAlma1.setEnabled(true);
-                 btnAuxAlma2.setEnabled(true);
-            }break;
-            case 6:{
+                btnAuxAlma2.setEnabled(true);
+                break;
+            }
+            case 6: {
                 btnEncDep1.setEnabled(true);
                 btnEncDep2.setEnabled(true);
                 btnEncDep3.setEnabled(true);
@@ -59,13 +67,16 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnEncDep6.setEnabled(true);
                 btnEncDep7.setEnabled(true);
                 btnEncDep8.setEnabled(true);
+                break;
             }
-            case 7:{
+            case 7: {
                 btnAuxRec1.setEnabled(true);
                 btnAuxRec2.setEnabled(true);
+                break;
             }
             default:
                 JOptionPane.showMessageDialog(this, "Error al redireccionar. Intente de nuevo.");
+                break;
         }
     }
 
@@ -89,7 +100,6 @@ public class menuPrincipal extends javax.swing.JFrame {
         btnVend2.setEnabled(false);
         btnVend3.setEnabled(false);
     }
-
 
     /**
      * vamo a ve que ondara esto878hh8u9uh This method is called from within the
@@ -379,7 +389,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnAuxRec1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxRec1ActionPerformed
-        movInterno movInterno = new movInterno();
+        movInterno movInterno = new movInterno(usu.getRolUsuario().toString());
         movInterno.setVisible(true);
     }//GEN-LAST:event_btnAuxRec1ActionPerformed
 

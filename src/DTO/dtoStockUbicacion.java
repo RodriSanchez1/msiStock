@@ -126,5 +126,10 @@ public class dtoStockUbicacion {
     public void setDescripcionLugarAlmacenamiento(String descripcionLugarAlmacenamiento) {
         this.descripcionLugarAlmacenamiento = descripcionLugarAlmacenamiento;
     }
+
+    @Override
+    public String toString() {
+        return "Estanteria "+ descripcionEstanteria + "Sector " + descripcionSector + ", LugarAlmacenamiento=" + descripcionLugarAlmacenamiento ;
+    }
         
 }

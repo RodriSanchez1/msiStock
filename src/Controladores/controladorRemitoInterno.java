@@ -66,7 +66,7 @@ public class controladorRemitoInterno {
         return id + 1;
     }
 
-    public boolean insertarNuevoRemito(Date fecha, int TipoMovimiento, int legajoUser, ArrayList<dtoDetalleRemito> detalleRemito) throws SQLException {
+    public boolean insertarNuevoRemitoEntrada(Date fecha, int TipoMovimiento, int legajoUser, ArrayList<dtoDetalleRemito> detalleRemito) throws SQLException {
         boolean succes = true;
         Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
         java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
@@ -105,6 +105,56 @@ public class controladorRemitoInterno {
 
             conexion.commit();
             System.out.println("Remito agregadp");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            conexion.rollback();
+        } finally {
+
+            conexion.close();
+        }
+
+        return succes;
+    }
+        public boolean insertarNuevoRemitoSalida(Date fecha, int TipoMovimiento, int legajoUser, ArrayList<dtoDetalleRemito> detalleRemito) throws SQLException {
+        boolean succes = true;
+        Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
+        java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+        try {
+            conexion.setAutoCommit(false);
+            CallableStatement cstmt = conexion.prepareCall("{call stInsertarNuevoRemito(?, ?, ?,?   )}");
+
+            cstmt.registerOutParameter("id", java.sql.Types.INTEGER);
+            cstmt.setDate("fecha", sqlDate);
+            cstmt.setInt("idTipoMovimiento", TipoMovimiento);
+            cstmt.setInt("legajoUser", legajoUser);
+            cstmt.execute();
+            int idNuevoRemito = cstmt.getInt("id");
+            cstmt.close();
+
+            for (dtoDetalleRemito dRemito : detalleRemito) {
+                cstmt = conexion.prepareCall("{call stManejadorStockSalida(?,?,?,?,?,?)}");
+               // cstmt.registerOutParameter("idStock", java.sql.Types.INTEGER);
+                cstmt.setInt("codProducto", dRemito.getProducto().getCodigo());
+                cstmt.setInt("cantidad", dRemito.getCantidad());
+                cstmt.setInt("idFormaVenta", dRemito.getFormaVenta().getIdFormaVenta());
+                cstmt.setInt("tipoMovimiento", TipoMovimiento);
+                cstmt.setInt("idEstanteria", dRemito.getIdEstanteria());
+                cstmt.setInt("idStock", dRemito.getIdStock());
+                cstmt.execute();
+                //int idStock = cstmt.getInt("idStock");
+                cstmt.close();
+                String query = "INSERT INTO detalle_remito(nroRemito,idStock,cantidad) values (?,?,?)";
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setInt(1, idNuevoRemito);
+                ps.setInt(2, dRemito.getIdStock());
+                ps.setInt(3, dRemito.getCantidad());
+                ps.executeUpdate();
+                ps.close();
+            }
+
+            conexion.commit();
+            System.out.println("Remito agregado");
 
         } catch (SQLException e) {
             System.out.println(e);

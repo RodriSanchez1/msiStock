@@ -16,19 +16,23 @@ import Modelos.Remito;
 import Modelos.Stock;
 import Modelos.TipoMovimiento;
 import Modelos.Usuario;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.text.TableView;
@@ -45,6 +49,8 @@ public class movInterno extends javax.swing.JFrame {
     private static final int BOOLEAN_COLUMN = 1;
     private static final int CANTIDAD_COLUMN = 2;
     private static final int DISPONIBILIDAD_COLUMN = 3;
+    private static final int DISPONIBILIDAD_UBICACION_COLUMN = 4;
+    private static final int UBICACION_COLUMN = 5;
     private DefaultTableModel model;
     Usuario user = null;
     boolean tipoMovimiento = false; //Entrada
@@ -68,7 +74,10 @@ public class movInterno extends javax.swing.JFrame {
         addTableListener();
         if (!tipoMovimiento) {
             listaStock = controlador.obtenerStock();
+            cmbTipoMovimiento.setSelectedIndex(1);
+
         }
+        cmbTipoMovimiento.setEnabled(false);
 
     }
 
@@ -97,18 +106,80 @@ public class movInterno extends javax.swing.JFrame {
                     TableModel model = (TableModel) e.getSource();
                     Producto producto = (Producto) model.getValueAt(row, PRODUCT_COLUMN);
                     FormaVenta formaVenta = (boolean) model.getValueAt(row, BOOLEAN_COLUMN) ? new FormaVenta(1, "online") : new FormaVenta(2, "presencial");
-                    int cantidadTotal= 0;
+                    int cantidadTotal = 0;
                     for (dtoStockUbicacion stock : listaStock) {
                         if (producto != null && stock.getCodProducto() == producto.getCodigo() && stock.getIdFormaVenta() == formaVenta.getIdFormaVenta()) {
                             //System.out.println(stock.getCantidad());
-                            cantidadTotal += stock.getCantidad();   
+                            cantidadTotal += stock.getCantidad();
                         }
                     }
+
                     model.setValueAt(cantidadTotal, row, DISPONIBILIDAD_COLUMN);
+
+                    TableColumn testColumn = tableDetalleRemito.getColumnModel().getColumn(5);
+                    JComboBox<String> comboBox = new JComboBox<>();
+                    controladorProducto controlador = new controladorProducto();
+                    DefaultComboBoxModel cmb = new DefaultComboBoxModel();
+                    ArrayList<dtoStockUbicacion> lista;
+                    for (dtoStockUbicacion dtoStock : listaStock) {
+                        if (dtoStock.getCodProducto() == producto.getCodigo() && dtoStock.getIdFormaVenta() == formaVenta.getIdFormaVenta()) {
+                            cmb.addElement(dtoStock);
+                        }
+                    }
+                    comboBox.setModel(cmb);
+
+                    //tableDetalleRemito.setValueAt(new DefaultCellEditor(comboBox), row, UBICACION_COLUMN);
+                    testColumn.setCellEditor(new DefaultCellEditor(comboBox));
+                }
+                if (column == UBICACION_COLUMN && !tipoMovimiento) {
+                    TableModel model = (TableModel) e.getSource();
+                    Producto producto = (Producto) model.getValueAt(row, PRODUCT_COLUMN);
+                    FormaVenta formaVenta = (boolean) model.getValueAt(row, BOOLEAN_COLUMN) ? new FormaVenta(1, "online") : new FormaVenta(2, "presencial");
+                    dtoStockUbicacion dto = (dtoStockUbicacion) model.getValueAt(row, UBICACION_COLUMN);
+                    int cantidadTotal = 0;
+                    if (dto != null) {
+                        for (dtoStockUbicacion stock : listaStock) {
+                            if (producto != null && stock.getCodProducto() == producto.getCodigo()
+                                    && stock.getIdFormaVenta() == formaVenta.getIdFormaVenta()
+                                    && stock.getIdEstanteria() == dto.getIdEstanteria()) {
+                                //System.out.println(stock.getCantidad());
+                                cantidadTotal = stock.getCantidad();
+                            }
+                        }
+                    }
+
+                    model.setValueAt(cantidadTotal, row, DISPONIBILIDAD_UBICACION_COLUMN);
                 }
             }
         });
     }
+//    public class EditBoolean extends AbstractCellEditor implements TableCellEditor {
+//
+//        private JComboBox cmb;
+//
+//        public EditBoolean() {
+//            // This is the component that will handle the editing of the cell value
+//           cmb = new JComboBox<>();
+//        }
+//
+//        // This method is called when editing is completed.
+//        // It must return the new value to be stored in the cell.
+//        @Override
+//        public Object getCellEditorValue() {
+//            return cmb;
+//        }
+//
+//        // This method is called when a cell value is edited by the user.
+//        @Override
+//        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+//            if(column == 2 && row == 4){
+//
+//               
+//               
+//            }
+//            return cmb;
+//       }
+//}
 //     private void fillComboHabitaciones() {
 //        ControladorHabitacion controlador = new ControladorHabitacion();
 //        DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -144,6 +215,10 @@ public class movInterno extends javax.swing.JFrame {
                         return Integer.class;
                     case 3:
                         return Integer.class;
+                    case 4:
+                        return Integer.class;
+                    case 5:
+                        return String.class;
                     default:
                         return String.class;
                 }
@@ -151,7 +226,7 @@ public class movInterno extends javax.swing.JFrame {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == PRODUCT_COLUMN|| column == BOOLEAN_COLUMN || column == CANTIDAD_COLUMN;
+                return column == PRODUCT_COLUMN || column == BOOLEAN_COLUMN || column == CANTIDAD_COLUMN || column == UBICACION_COLUMN;
             }
         ;
         };
@@ -159,8 +234,8 @@ public class movInterno extends javax.swing.JFrame {
             model.setColumnIdentifiers(new String[]{"Producto", "Online", "Cantidad"});
             model.addRow(new Object[]{null, false, 0});
         } else {
-            model.setColumnIdentifiers(new String[]{"Producto", "Online", "Cantidad", "Disponible"});
-            model.addRow(new Object[]{null, false, 0, 0});
+            model.setColumnIdentifiers(new String[]{"Producto", "Online", "Cantidad", "Disponible", "Disponible en ubicacion", "Ubicacion"});
+            model.addRow(new Object[]{null, false, 0, 0, 0, null});
         }
         tableDetalleRemito.setModel(model);
         TableColumn testColumn = tableDetalleRemito.getColumnModel().getColumn(0);
@@ -254,7 +329,7 @@ public class movInterno extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tableDetalleRemito);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 580, 210));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 840, 210));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 0, 0));
@@ -311,6 +386,7 @@ public class movInterno extends javax.swing.JFrame {
         Remito nvoRemito = new Remito();
         Date fecha = jDateChooser1.getDate();
         TipoMovimiento tipoMovimiento = (TipoMovimiento) cmbTipoMovimiento.getSelectedItem();
+
         ArrayList<dtoDetalleRemito> listaDetalle = new ArrayList();
         try {
             if (tableDetalleRemito.getRowCount() != 0) {
@@ -328,14 +404,32 @@ public class movInterno extends javax.swing.JFrame {
                     if (cantidad <= 0) {
                         throw new Error("La cantidad debe ser mayor a 0");
                     }
-                    listaDetalle.add(new dtoDetalleRemito(cantidad, producto, formaVenta));
+                    if (!this.tipoMovimiento) {
+                        dtoStockUbicacion dto = (dtoStockUbicacion) tableDetalleRemito.getValueAt(i, UBICACION_COLUMN);
+                        if (null == dto) {
+                            throw new Error("Seleccione una ubicacion");
+                        }
+                        int cantidadXUbicacion = (Integer) tableDetalleRemito.getValueAt(i, DISPONIBILIDAD_UBICACION_COLUMN);
+                        if (cantidad > cantidadXUbicacion || cantidadXUbicacion == 0) {
+                            throw new Error("Debe ingresar una cantidad menor a la cantidad en ubicacion");
+                        }
+                        listaDetalle.add(new dtoDetalleRemito(cantidad, producto, formaVenta, dto.getIdStock(), dto.getIdEstanteria()));
+                    } else {
+                        listaDetalle.add(new dtoDetalleRemito(cantidad, producto, formaVenta));
+                    }
+
                 }
             } else {
                 throw new Error("Debe agregar por lo menos un producto");
             }
 
             controladorRemitoInterno controlador = new controladorRemitoInterno();
-            controlador.insertarNuevoRemito(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+            if (this.tipoMovimiento) {
+                controlador.insertarNuevoRemitoEntrada(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+            } else {
+                controlador.insertarNuevoRemitoSalida(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+                listaStock = controlador.obtenerStock();
+            }
             model.setRowCount(0);
             ImageIcon icon = new ImageIcon("src/Imagenes/mas.png");
             JOptionPane.showMessageDialog(null, "Remito cargado exitosamente",
@@ -357,8 +451,12 @@ public class movInterno extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbTipoMovimientoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (tipoMovimiento) {
+            model.addRow(new Object[]{null, false, 0});
+        } else {
+            model.addRow(new Object[]{null, false, 0, 0, 0, null});
+        }
 
-        model.addRow(new Object[]{null, false, 0});
      }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
