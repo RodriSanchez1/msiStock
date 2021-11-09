@@ -196,6 +196,11 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         jLabel5.setText("Lugar de almacenamiento:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, -1, -1));
 
+        cboLugarUbicacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboLugarUbicacionActionPerformed(evt);
+            }
+        });
         getContentPane().add(cboLugarUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 250, 30));
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -222,7 +227,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 530, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 530, 230));
 
         btnCargar.setBackground(new java.awt.Color(102, 0, 0));
         btnCargar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -312,10 +317,14 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         Producto prod = new Producto();
         prod.setCodigo(cod);
 
-        //  Stock stock = new Stock(0, prod, cant, ubi,);
+         //  Stock stock = new Stock(0, prod, cant, ubi,);
         //controlador.ubicarProducto(stock);
 
     }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void cboLugarUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLugarUbicacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboLugarUbicacionActionPerformed
 
     /**
      * @param args the command line arguments
