@@ -17,40 +17,49 @@ public class menuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form Carga_Producto
      */
-    
+    private Usuario usu;
+
     public menuPrincipal() {
         initComponents();
-        
+
         deshabilitarBotones();
 
     }
-    
+
     public menuPrincipal(Usuario usu) {
         initComponents();
-
+        this.usu = usu;
         deshabilitarBotones();
+        System.out.println(usu.getRolUsuario().getIdRol());
 
         switch (usu.getRolUsuario().getIdRol()) {
             case 1: {
                 btnAdmin.setEnabled(true);
-            }break;
+                break;
+            }
             case 2: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
                 btnVend3.setEnabled(true);
-            }break;
+                break;
+            }
             case 3: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
                 btnVend3.setEnabled(true);
-            }break;
-            case 4:{btnRep1.setEnabled(true);
-                    btnRep2.setEnabled(true);}break;
-            case 5:{
-                btnAuxAlma1.setEnabled(true);
-                 btnAuxAlma2.setEnabled(true);
-            }break;
-            case 6:{
+                break;
+            }
+            case 4: {
+                btnRep1.setEnabled(true);
+                btnRep2.setEnabled(true);
+                break;
+            }
+            case 5: {
+                btnAuxRec1.setEnabled(true);
+                btnAuxRec2.setEnabled(true);
+                break;
+            }
+            case 6: {
                 btnEncDep1.setEnabled(true);
                 btnEncDep2.setEnabled(true);
                 btnEncDep3.setEnabled(true);
@@ -59,13 +68,16 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnEncDep6.setEnabled(true);
                 btnEncDep7.setEnabled(true);
                 btnEncDep8.setEnabled(true);
+                break;
             }
-            case 7:{
-                btnAuxRec1.setEnabled(true);
-                btnAuxRec2.setEnabled(true);
+            case 7: {
+                btnAuxAlma1.setEnabled(true);
+                btnAuxAlma2.setEnabled(true);
+                break;
             }
             default:
                 JOptionPane.showMessageDialog(this, "Error al redireccionar. Intente de nuevo.");
+                break;
         }
     }
 
@@ -89,7 +101,6 @@ public class menuPrincipal extends javax.swing.JFrame {
         btnVend2.setEnabled(false);
         btnVend3.setEnabled(false);
     }
-
 
     /**
      * vamo a ve que ondara esto878hh8u9uh This method is called from within the
@@ -151,6 +162,11 @@ public class menuPrincipal extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("Salir");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 620, 170, 50));
 
         btnAuxAlma2.setBackground(new java.awt.Color(102, 0, 0));
@@ -379,7 +395,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnAuxRec1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxRec1ActionPerformed
-        movInterno movInterno = new movInterno();
+        movInterno movInterno = new movInterno(usu);
         movInterno.setVisible(true);
     }//GEN-LAST:event_btnAuxRec1ActionPerformed
 
@@ -434,6 +450,11 @@ public class menuPrincipal extends javax.swing.JFrame {
     private void btnEncDep5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep5ActionPerformed
         new Carga_Producto().setVisible(true);
     }//GEN-LAST:event_btnEncDep5ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        this.dispose();
+        new VentanaLogin().setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments

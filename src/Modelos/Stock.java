@@ -16,6 +16,10 @@ public class Stock {
     private Ubicacion ubicacion;
     private FormaVenta formaVenta;
 
+    public FormaVenta getFormaVenta() {
+        return formaVenta;
+    }
+
     public int getIdStock() {
         return idStock;
     }
@@ -41,13 +45,6 @@ public class Stock {
     public Ubicacion getUbicacion() {
         return ubicacion;
     }
-
-  
-
-    public FormaVenta getFormaVenta() {
-        return formaVenta;
-    }
-
    
 
     public Stock(int idStock, Producto producto, int cantidad, Ubicacion ubicacion, FormaVenta formaVenta) {

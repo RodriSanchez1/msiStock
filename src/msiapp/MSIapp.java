@@ -38,9 +38,9 @@ public class MSIapp {
      */
     public static void main(String[] args) {
 
-        new CrearUsario().setVisible(true);
-        
-
+       // new CrearUsario().setVisible(true);
+        //new movInterno("admin").setVisible(true);
+        new VentanaLogin().setVisible(true);
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         } catch (ClassNotFoundException e) {

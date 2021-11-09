@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+
 import Modelos.FormatoVenta;
 import Modelos.Marca;
 import Modelos.Producto;
@@ -29,6 +30,7 @@ public class controladorProducto {
     private void abrirConexion() {
 
         try {
+            //con = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             //con = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=easyStock", "sa", "fa");
             con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234"); 
         } catch (SQLException ex) {
@@ -45,6 +47,27 @@ public class controladorProducto {
             ex.printStackTrace();
         }
     }
+
+//    public void agregarProducto(Producto p) {
+//        try {
+//            abrirConexion();
+//            PreparedStatement st = con.prepareStatement("Insert into producto(codigo, nombre, idMarca, idRubro, volumen, idFormato, stockMinimo)values (?,?,?,?,?,?,?)");
+//            st.setInt(1, p.getCodigo());
+//            st.setString(2, p.getNombreProducto());
+//            st.setInt(3, p.getMarca().getIdMarca());
+//            st.setInt(4, p.getRubro().getIdRubro());
+//            st.setString(5, p.getTamanio());
+//            st.setInt(6, p.getFormatoVenta().getCodigo());
+//            st.setInt(7, p.getStockMinimo());
+//
+//            st.executeUpdate();
+//            st.close();
+//            cerrarConexion();
+//            System.out.println("Se agrego correctamente");
+//        } catch (Exception e) {
+//            System.out.println("algo falló");
+//        }
+//    }
 
     public ArrayList<Producto> obtenerProductos() {
         ArrayList<Producto> lista = new ArrayList();
