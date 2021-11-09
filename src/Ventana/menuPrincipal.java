@@ -432,7 +432,8 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEncDep8ActionPerformed
 
     private void btnVend1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVend1ActionPerformed
-        // TODO add your handling code here:
+         movInterno movInterno = new movInterno(usu);
+        movInterno.setVisible(true);
     }//GEN-LAST:event_btnVend1ActionPerformed
 
     private void btnVend2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVend2ActionPerformed
