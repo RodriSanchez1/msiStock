@@ -5,11 +5,13 @@
  */
 package Controladores;
 
-import DTO.dtoActualizarUbicacion;
+
+import DTO.dtoUbicacion;
 import Modelos.Estanteria;
 import Modelos.FormaVenta;
 import Modelos.LugarUbicacion;
 import Modelos.Producto;
+import Modelos.Remito;
 import Modelos.Sector;
 import Modelos.Stock;
 import Modelos.Ubicacion;
@@ -33,7 +35,7 @@ import javax.swing.JOptionPane;
 public class ControladorUbicacion {
     
    // private final String url = "jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock";
-    private final String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=Easy_stock2";
+    private final String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=easyStock";
     private final String usuario = "sa";
     private final String contra = "1995";
     //private final String usuario = "admin";
@@ -44,7 +46,7 @@ public class ControladorUbicacion {
          System.out.println("comenzo el proceso");
          try{
             Connection conexion = DriverManager.getConnection(url, usuario, contra);
-            PreparedStatement ps = conexion.prepareStatement("insert into ubicacion (id_estanteria) values (?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conexion.prepareStatement("insert into ubicacion (idEstanteria) values (?)", Statement.RETURN_GENERATED_KEYS);
             
         ps.setInt(1, ubi.getEstanteria().getId());
         
@@ -99,12 +101,12 @@ public class ControladorUbicacion {
         
         try{
              Connection conexion = DriverManager.getConnection(url, usuario, contra);
-             String Consulta = "select cod_almacenamiento, nombre from lugar_almacenamiento ";
+             String Consulta = "select codAlmacenamiento, nombre from lugarAlmacenamiento ";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
              
              while(rs.next()){
-                 int cod = rs.getInt("cod_almacenamiento");
+                 int cod = rs.getInt("codAlmacenamiento");
                  String nombreUBi = rs.getString("nombre");
            
                  LugarUbicacion lugar = new LugarUbicacion(cod, nombreUBi);
@@ -126,13 +128,13 @@ public class ControladorUbicacion {
         
         try{
              Connection conexion = DriverManager.getConnection(url, usuario, contra);
-             String Consulta = "select id_sector, nombre from sector where "
-                     + "lugar_almacenamiento = " + idLugarUbicacion + "";
+             String Consulta = "select idSector, nombre from sector where "
+                     + "lugarAlmacenamiento = " + idLugarUbicacion + "";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
              
              while(rs.next()){
-                 int cod = rs.getInt("id_sector");
+                 int cod = rs.getInt("idSector");
                  String nombreUBi = rs.getString("nombre");
                  
                  Sector sector = new Sector(cod, nombreUBi, null);
@@ -153,12 +155,12 @@ public class ControladorUbicacion {
         
         try{
              Connection conexion = DriverManager.getConnection(url, usuario, contra);
-             String Consulta = "select id_estanteria, descripcion from Estanteria where id_sector = " + idSector + "";
+             String Consulta = "select idEstanteria, descripcion from Estanteria where idSector = " + idSector + "";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
              
              while(rs.next()){
-                 int cod = rs.getInt("id_estanteria");
+                 int cod = rs.getInt("idEstanteria");
                  String nombreUBi = rs.getString("descripcion");
                  
                  Estanteria estanteria = new Estanteria (cod, nombreUBi);
@@ -179,12 +181,12 @@ public class ControladorUbicacion {
         
         try{
              Connection conexion = DriverManager.getConnection(url, usuario, contra);
-             String Consulta = "select id_forma_venta, descripcion from forma_venta ";
+             String Consulta = "select idFormaVenta, descripcion from formaVenta ";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
              
              while(rs.next()){
-                 int cod = rs.getInt("id_forma_venta");
+                 int cod = rs.getInt("idFormaVenta");
                  String nombreUBi = rs.getString("descripcion");
            
                  FormaVenta forma = new FormaVenta(cod, nombreUBi);
@@ -200,8 +202,8 @@ public class ControladorUbicacion {
         return lista;
     }
     
-    public ArrayList<dtoActualizarUbicacion> buscarProducto(int id) {
-        ArrayList<dtoActualizarUbicacion> lista = new ArrayList<>();
+    public ArrayList<dtoUbicacion> buscarProducto(int id) {
+        ArrayList<dtoUbicacion> lista = new ArrayList<>();
 
         try {
             Connection conexion = DriverManager.getConnection(url, usuario, contra);
@@ -226,7 +228,7 @@ public class ControladorUbicacion {
                 
               
 
-                dtoActualizarUbicacion dto = new dtoActualizarUbicacion(nombreProd, cant, nombreLugar, nombreSector, estanteria);
+                dtoUbicacion dto = new dtoUbicacion(nombreProd, cant, nombreLugar, nombreSector, estanteria);
                 lista.add(dto);
 
             }
@@ -293,4 +295,41 @@ public class ControladorUbicacion {
              Logger.getLogger(ControladorUbicacion.class.getName()).log(Level.SEVERE, null, e);     
         }  
     }
-}
+      
+      
+      public ArrayList<dtoUbicacion> buscarProductoParaUbicar(int id) {
+        ArrayList<dtoUbicacion> lista = new ArrayList<>();
+
+        try {
+            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+
+            String Consulta = "select s.idStock 'idStock', p.nombre 'articulo' , u.cantidad  'cantidad' from stock s join ubicacion u on s.idStock = u.idStock\n" +
+            " join producto p on p.codProducto = s.codProducto where u.idEstanteria is null and s.codProducto = " + id+ "" ;
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(Consulta);
+
+            while (rs.next()) {
+
+                Integer idStock = rs.getInt("idStock");
+                String nombreProd = rs.getString("articulo");
+                int cant = rs.getInt("cantidad");
+               
+                
+                dtoUbicacion dto = new dtoUbicacion(idStock,id, nombreProd, cant);
+                lista.add(dto);      
+         
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(ControladorUbicacion.class.getName()).log(Level.SEVERE, null, e);
+            
+           
+
+        }
+
+        return lista;
+    }
+      
+   
+    }
+

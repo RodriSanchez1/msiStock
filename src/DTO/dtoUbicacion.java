@@ -9,8 +9,8 @@ package DTO;
  *
  * @author Flor
  */
-public class dtoActualizarUbicacion {
-    
+public class dtoUbicacion {
+    private Integer idStock;
     private int codArticulo;
     private String nombreArticulo;
     private String nombreLugar;
@@ -18,6 +18,16 @@ public class dtoActualizarUbicacion {
     private String nombreEstante;
     private int cantidad;
 
+    public int getIdStock() {
+        return idStock;
+    }
+
+    public void setIdStock(int idStock) {
+        this.idStock = idStock;
+    }
+
+    
+    
     public int getCodArticulo() {
         return codArticulo;
     }
@@ -64,9 +74,17 @@ public class dtoActualizarUbicacion {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    } 
+    
+    
+    public dtoUbicacion(int idStock, int codArticulo, String nombreArticulo, int cantidad) {
+        this.idStock= idStock; 
+        this.codArticulo = codArticulo;
+        this.nombreArticulo = nombreArticulo;
+        this.cantidad = cantidad;
     }
 
-    public dtoActualizarUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad) {
+    public dtoUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad) {
         this.codArticulo = codArticulo;
         this.nombreArticulo = nombreArticulo;
         this.nombreLugar = nombreLugar;
@@ -75,9 +93,9 @@ public class dtoActualizarUbicacion {
         this.cantidad = cantidad;
     }
 
-    public dtoActualizarUbicacion() {
+    public dtoUbicacion() {
     }
-     public dtoActualizarUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante) {
+     public dtoUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante) {
         this.codArticulo = codArticulo;
         this.nombreArticulo = nombreArticulo;
         this.nombreLugar = nombreLugar;
@@ -85,7 +103,7 @@ public class dtoActualizarUbicacion {
         this.nombreEstante = nombreEstante;
        
     }
-        public dtoActualizarUbicacion( String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante) {
+        public dtoUbicacion( String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante) {
        
         this.nombreArticulo = nombreArticulo;
         this.nombreLugar = nombreLugar;
@@ -93,7 +111,7 @@ public class dtoActualizarUbicacion {
         this.nombreEstante = nombreEstante;
        
     }
-        public dtoActualizarUbicacion( String nombreArticulo,  int cantidad, String nombreLugar, String nombreSector, String nombreEstante) {
+        public dtoUbicacion( String nombreArticulo,  int cantidad, String nombreLugar, String nombreSector, String nombreEstante) {
         
         this.nombreArticulo = nombreArticulo;
           this.cantidad = cantidad;
