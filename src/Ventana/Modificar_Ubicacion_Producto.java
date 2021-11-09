@@ -6,7 +6,8 @@
 package Ventana;
 
 import Controladores.ControladorUbicacion;
-import DTO.dtoActualizarUbicacion;
+import DTO.dtoUbicacion;
+
 import Modelos.Estanteria;
 import Modelos.LugarUbicacion;
 import Modelos.Sector;
@@ -192,12 +193,12 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
         catch(Exception e){
              JOptionPane.showMessageDialog(this, "el campo ID  solo acepta números enteros");
         }
-         ArrayList<dtoActualizarUbicacion> lista = controlador.buscarProducto(cod);
+         ArrayList<dtoUbicacion> lista = controlador.buscarProducto(cod);
            modelo = new DefaultTableModel();
           
           modelo.setColumnIdentifiers(new String[]{ "nombre", "cantidad", "Lugar Ubicacion", "Sector", "Estantería"});
           
-          for(dtoActualizarUbicacion dto : lista){
+          for(dtoUbicacion dto : lista){
               modelo.addRow(new Object[] {dto.getNombreArticulo(), dto.getCantidad(), dto.getNombreLugar(), dto.getNombreSector(), dto.getNombreEstante()});
               jTable.setModel(modelo);
               
@@ -222,7 +223,7 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
         if (jTable.getSelectedRow() < 1){
              JOptionPane.showMessageDialog(this, "Debe seleccionar un item de la tabla a modificar");
         }
-       dtoActualizarUbicacion dto = new dtoActualizarUbicacion();
+       dtoUbicacion dto = new dtoUbicacion();
        dto.setNombreArticulo( (String)jTable.getValueAt(row, 0));
         System.out.println(dto);
         //String nombreArt = (String)jTable.getValueAt(row, 0);

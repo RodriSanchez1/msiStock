@@ -40,7 +40,7 @@ public class controladorUsuario {
         }
     }
 
-    public ArrayList<Usuario> obtenerUsuarios(){
+   /* public ArrayList<Usuario> obtenerUsuarios(){
         ArrayList<Usuario> ListaUsuarios = new ArrayList<Usuario>();
         try {
             abrirConexion();
@@ -62,5 +62,6 @@ public class controladorUsuario {
         }
         return ListaUsuarios;
     }
+*/
     
 }
