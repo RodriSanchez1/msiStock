@@ -43,12 +43,15 @@ public class ControladorUbicacion {
     
    
     public void crearUbicacion(Ubicacion ubi){
-         System.out.println("comenzo el proceso");
+       
          try{
             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
-            PreparedStatement ps = conexion.prepareStatement("insert into ubicacion (idEstanteria) values (?)", Statement.RETURN_GENERATED_KEYS);
+          // Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            PreparedStatement ps = conexion.prepareStatement("insert into ubicacion ( cantidad, idEstanteria) values ( ?, ?)", Statement.RETURN_GENERATED_KEYS);
             
-        ps.setInt(1, ubi.getEstanteria().getId());
+    
+        ps.setInt(1, ubi.getCantidad());
+        ps.setInt(2, ubi.getEstanteria().getId());
         
             try{   
                  ps.executeUpdate();
@@ -76,7 +79,7 @@ public class ControladorUbicacion {
             PreparedStatement ps = conexion.prepareStatement("insert into stock (cod_producto, cantidad, id_ubicacion, id_forma_venta) values (?, ?,?, ?)");
             
             ps.setInt(1, stock.getProducto().getCodigo());
-            ps.setInt (2, stock.getCantidad());
+           // ps.setInt (2, stock.getCantidad());
             ps.setInt(3, stock.getUbicacion().getId());
             ps.setInt(4, stock.getFormaVenta().getIdFormaVenta());
             
@@ -310,19 +313,22 @@ public class ControladorUbicacion {
         try {
             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
-            String Consulta = "select s.idStock 'idStock', p.nombre 'articulo' , u.cantidad  'cantidad' from stock s join ubicacion u on s.idStock = u.idStock\n" +
-            " join producto p on p.codProducto = s.codProducto where u.idEstanteria is null and s.codProducto = " + id+ "" ;
+           
+           // Connection conexion = DriverManager.getConnection(url, usuario, contra);
+
+            String Consulta = "select u.idUbicacion 'idUbicacion', p.nombre 'articulo' , u.cantidad  'cantidad' from stock s join ubicacion u on s.idStock = u.idStock\n" +
+            " join producto p on p.codProducto = s.codProducto where u.idEstanteria is null and s.codProducto = " + id+ " and cantidad > 0" ;
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
 
             while (rs.next()) {
 
-                Integer idStock = rs.getInt("idStock");
+                Integer idubi = rs.getInt("idUbicacion");
                 String nombreProd = rs.getString("articulo");
                 int cant = rs.getInt("cantidad");
                
                 
-                dtoUbicacion dto = new dtoUbicacion(idStock,id, nombreProd, cant);
+                dtoUbicacion dto = new dtoUbicacion(idubi,id, nombreProd, cant);
                 lista.add(dto);      
          
             }
@@ -337,6 +343,55 @@ public class ControladorUbicacion {
         return lista;
     }
       
+      public boolean modificarUbicacion(int id,int estanteria, int cant ){
+        boolean x = false;
+         try {
+            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            PreparedStatement ps = conexion.prepareStatement("update ubicacion set idEstanteria = " + estanteria + " , cantidad = " + cant + " where idUbicacion = " + id + "");
+    
+              ps.executeUpdate();
+                ps.close();
+            conexion.close();
+
+            x = true;
+            if (x = true){
+                 JFrame jframe = new JFrame();
+               JOptionPane.showMessageDialog( jframe , "se Guardó la ubicación correctamente.");  
+            }
+        }
+        catch(Exception e)
+        {
+           x = false;
+            JFrame jframe = new JFrame();
+            JOptionPane.showMessageDialog( jframe , "Error, No se pudo cargar la ubicación del producto.");
+        }
+        return x;
+    }
+      public boolean modificarUbicacion2(int id, int cant ){
+        boolean x = false;
+         try {
+            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            PreparedStatement ps = conexion.prepareStatement("update ubicacion set cantidad = " + cant + " where idUbicacion = " + id + "");
+    
+              ps.executeUpdate();
+                ps.close();
+            conexion.close();
+
+            x = true;
+            if (x = true){
+                 JFrame jframe = new JFrame();
+               JOptionPane.showMessageDialog( jframe , "se Guardó la ubicación correctamente.");  
+            }
+        }
+        catch(Exception e)
+        {
+           x = false;
+            JFrame jframe = new JFrame();
+            JOptionPane.showMessageDialog( jframe , "Error, No se pudo cargar la ubicación del producto.");
+        }
+        return x;
+    }
+     
    
     }
 

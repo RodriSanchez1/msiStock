@@ -105,6 +105,12 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         }
         cboEstanteria.setModel(model);
     }
+    
+    public static void borrarFilas(final DefaultTableModel model) {
+    for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
+        model.removeRow(i);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -227,7 +233,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 530, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 230));
 
         btnCargar.setBackground(new java.awt.Color(102, 0, 0));
         btnCargar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -273,10 +279,10 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         ArrayList<dtoUbicacion> lista = controlador.buscarProductoParaUbicar(cod);
         modelo = new DefaultTableModel();
 
-        modelo.setColumnIdentifiers(new String[]{"Código stock", " Artículo", "Cantidad disponible"});
+        modelo.setColumnIdentifiers(new String[]{"Código ubicación", " Artículo", "Cantidad disponible"});
 
         for (dtoUbicacion dto : lista) {
-            modelo.addRow(new Object[]{dto.getIdStock(), dto.getNombreArticulo(), dto.getCantidad()});
+            modelo.addRow(new Object[]{dto.getIdubi(), dto.getNombreArticulo(), dto.getCantidad()});
          
                  jTable.setModel(modelo); 
                  cantProd= dto.getCantidad();
@@ -293,30 +299,54 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         // TODO add your handling code here:
+        int row = jTable.getSelectedRow();
+        if (jTable.getSelectedRow() < 0){
+             JOptionPane.showMessageDialog(this, "Debe seleccionar un item de la tabla a modificar");
+        }
+  
+        int column = 0;
+        int column2 = 2;
+   
+        int idUbi = (Integer) jTable.getModel().getValueAt(row, column);
+        Estanteria estanteria = (Estanteria) cboEstanteria.getSelectedItem();
+         int cant = (Integer) jTable.getModel().getValueAt(row, column2);
+      
+     
+         int cantidad = 0 ;
+         
+          try {
 
-        int cod = 0;
-        int cant = 0;
-
-        try {
-
-            cod = Integer.parseInt(txtCodigo.getText());
-            cant = Integer.parseInt(txtCantidad.getText());
+            cantidad = Integer.parseInt(txtCantidad.getText());
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "el campo ID y cantidad solo aceptan números enteros");
 
         }
-
-        //   LugarUbicacion lugar = (LugarUbicacion)cboLugarUbicacion.getSelectedItem();
-        // Sector sector = (Sector)cboSector.getSelectedItem();
-        Estanteria estanteria = (Estanteria) cboEstanteria.getSelectedItem();
-
-        Ubicacion ubi = new Ubicacion(0, estanteria);
-
-        controlador.crearUbicacion(ubi);
-        Producto prod = new Producto();
-        prod.setCodigo(cod);
-
+          
+             if(cantidad == cant){
+                 //controlador.
+          Ubicacion ubi = new Ubicacion(idUbi,estanteria,cant); //idubi, idEstanteria cant
+          controlador.modificarUbicacion(idUbi,estanteria.getId(),cant);
+        
+          
+             
+         }else if(cant > cantidad ){
+             int cantidadSobrante = 0;
+             cantidadSobrante = cant - cantidad;
+             // Ubicacion ubi = new Ubicacion(idUbi,estanteria,cantidadSobrante); 
+              controlador.modificarUbicacion2(idUbi,cantidadSobrante);
+              
+              Ubicacion ubi2 = new Ubicacion(0,estanteria, cantidad); 
+              controlador.crearUbicacion(ubi2);
+             
+         } else{
+             JOptionPane.showMessageDialog(this, "La cantidad a guardar no puede ser mayor a la cantidad existente");
+         }
+        
+           borrarFilas(modelo);
+         
+         
+     
          //  Stock stock = new Stock(0, prod, cant, ubi,);
         //controlador.ubicarProducto(stock);
 

@@ -12,7 +12,6 @@ package Modelos;
 public class Stock {
     private int idStock;
     private Producto producto;
-    private int cantidad;
     private Ubicacion ubicacion;
     private FormaVenta formaVenta;
 
@@ -34,13 +33,6 @@ public class Stock {
 
 
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
 
     public Ubicacion getUbicacion() {
         return ubicacion;
@@ -50,14 +42,14 @@ public class Stock {
     public Stock(int idStock, Producto producto, int cantidad, Ubicacion ubicacion, FormaVenta formaVenta) {
         this.idStock = idStock;
         this.producto = producto;
-        this.cantidad = cantidad;
+       
         this.ubicacion = ubicacion;
         this.formaVenta = formaVenta;
     }
 
     @Override
     public String toString() {
-        return "Stock{" + "idStock=" + idStock + ", producto=" + producto + ", cantidad=" + cantidad + ", ubicacion=" + ubicacion + ", formaVenta=" + formaVenta + '}';
+        return "Stock{" + "idStock=" + idStock + ", producto=" + producto +  ", ubicacion=" + ubicacion + ", formaVenta=" + formaVenta + '}';
     }
 
   
