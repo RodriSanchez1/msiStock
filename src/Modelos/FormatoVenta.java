@@ -40,7 +40,7 @@ public class FormatoVenta {
 
     @Override
     public String toString() {
-        return "FormatoVenta{" + "codigo=" + codigo + ", descripcion=" + descripcion + '}';
+        return descripcion;
     }
     
     

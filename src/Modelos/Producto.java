@@ -17,6 +17,7 @@ public class Producto {
     private Rubro rubro;
     private FormatoVenta formatoVenta; 
     private String tamanio;
+    
 
     public int getCodigo() {
         return codigo;
@@ -42,6 +43,17 @@ public class Producto {
         this.stockMinimo = stockMinimo;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public Rubro getRubro() {
+        return rubro;
+    }
+
+    public FormatoVenta getFormatoVenta() {
+        return formatoVenta;
+    }
 
     public String getTamanio() {
         return tamanio;
@@ -59,6 +71,20 @@ public class Producto {
         this.rubro = rubro;
         this.formatoVenta = formatoVenta;
         this.tamanio = tamanio;
+    }
+
+    public Producto(String nombreProducto, int stockMinimo, Marca marca, Rubro rubro, FormatoVenta formatoVenta, String tamanio) {
+        this.nombreProducto = nombreProducto;
+        this.stockMinimo = stockMinimo;
+        this.marca = marca;
+        this.rubro = rubro;
+        this.formatoVenta = formatoVenta;
+        this.tamanio = tamanio;
+    }
+
+    public Producto(int codigo, String nombreProducto) {
+        this.codigo = codigo;
+        this.nombreProducto = nombreProducto;
     }
 
     public Producto() {
