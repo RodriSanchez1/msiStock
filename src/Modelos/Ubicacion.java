@@ -12,6 +12,17 @@ package Modelos;
 public class Ubicacion {
     private int id;
     private Estanteria estanteria; 
+    private int cantidad;
+    
+    
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
 
     public int getId() {
         return id;
@@ -24,12 +35,22 @@ public class Ubicacion {
     public Estanteria getEstanteria() {
         return estanteria;
     }
+    
 
-  
-    public Ubicacion(int id, Estanteria estanteria) {
+    public Ubicacion(int id, Estanteria estanteria, int cantidad) {
         this.id = id;
         this.estanteria = estanteria;
+        this.cantidad = cantidad;
     }
+
+    public Ubicacion(int id, int cantidad) {
+        this.id = id;
+        this.cantidad = cantidad;
+    }
+
+    
+  
+   
   public Ubicacion( Estanteria estanteria) {
         
         this.estanteria = estanteria;

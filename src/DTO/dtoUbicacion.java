@@ -10,7 +10,7 @@ package DTO;
  * @author Flor
  */
 public class dtoUbicacion {
-    private Integer idStock;
+    private Integer idUbi;
     private int codArticulo;
     private String nombreArticulo;
     private String nombreLugar;
@@ -18,12 +18,12 @@ public class dtoUbicacion {
     private String nombreEstante;
     private int cantidad;
 
-    public int getIdStock() {
-        return idStock;
+    public int getIdubi() {
+        return idUbi;
     }
 
-    public void setIdStock(int idStock) {
-        this.idStock = idStock;
+    public void setidUbi(int idStock) {
+        this.idUbi = idStock;
     }
 
     
@@ -77,8 +77,8 @@ public class dtoUbicacion {
     } 
     
     
-    public dtoUbicacion(int idStock, int codArticulo, String nombreArticulo, int cantidad) {
-        this.idStock= idStock; 
+    public dtoUbicacion(int idUbi, int codArticulo, String nombreArticulo, int cantidad) {
+        this.idUbi= idUbi; 
         this.codArticulo = codArticulo;
         this.nombreArticulo = nombreArticulo;
         this.cantidad = cantidad;

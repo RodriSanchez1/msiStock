@@ -232,14 +232,14 @@ public class Ubicar_Producto extends javax.swing.JFrame {
         // Sector sector = (Sector)cboSector.getSelectedItem();
         Estanteria estanteria =   (Estanteria)cboEstanteria.getSelectedItem();
 
-        Ubicacion ubi = new Ubicacion(0, estanteria);
+    //    Ubicacion ubi = new Ubicacion(0, estanteria);
 
-        controlador.crearUbicacion(ubi);
+    //    controlador.crearUbicacion(ubi);
         Producto prod = new Producto();
         prod.setCodigo(cod);
 
-        Stock stock = new Stock(0, prod, cant, ubi, forma);
-        controlador.ubicarProducto(stock);
+    //    Stock stock = new Stock(0, prod, cant, ubi, forma);
+       // controlador.ubicarProducto(stock);
 
 
     }//GEN-LAST:event_btnCargarActionPerformed
