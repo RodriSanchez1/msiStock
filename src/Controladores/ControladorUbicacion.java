@@ -35,9 +35,9 @@ import javax.swing.JOptionPane;
 public class ControladorUbicacion {
     
    // private final String url = "jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock";
-    private final String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=easyStock";
-    private final String usuario = "sa";
-    private final String contra = "1995";
+//    private final String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=easyStock";
+//    private final String usuario = "sa";
+//    private final String contra = "1995";
     //private final String usuario = "admin";
     //private final String contra = "admin1234";
     
@@ -45,7 +45,7 @@ public class ControladorUbicacion {
     public void crearUbicacion(Ubicacion ubi){
          System.out.println("comenzo el proceso");
          try{
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             PreparedStatement ps = conexion.prepareStatement("insert into ubicacion (idEstanteria) values (?)", Statement.RETURN_GENERATED_KEYS);
             
         ps.setInt(1, ubi.getEstanteria().getId());
@@ -71,7 +71,8 @@ public class ControladorUbicacion {
 
     public void ubicarProducto( Stock stock ){
         try{
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             PreparedStatement ps = conexion.prepareStatement("insert into stock (cod_producto, cantidad, id_ubicacion, id_forma_venta) values (?, ?,?, ?)");
             
             ps.setInt(1, stock.getProducto().getCodigo());
@@ -100,7 +101,8 @@ public class ControladorUbicacion {
    
         
         try{
-             Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
              String Consulta = "select codAlmacenamiento, nombre from lugarAlmacenamiento ";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
@@ -127,7 +129,8 @@ public class ControladorUbicacion {
    
         
         try{
-             Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
              String Consulta = "select idSector, nombre from sector where "
                      + "lugarAlmacenamiento = " + idLugarUbicacion + "";
              Statement st = conexion.createStatement();
@@ -154,7 +157,8 @@ public class ControladorUbicacion {
    
         
         try{
-             Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
              String Consulta = "select idEstanteria, descripcion from Estanteria where idSector = " + idSector + "";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
@@ -180,7 +184,8 @@ public class ControladorUbicacion {
    
         
         try{
-             Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
              String Consulta = "select idFormaVenta, descripcion from formaVenta ";
              Statement st = conexion.createStatement();
              ResultSet rs = st.executeQuery(Consulta);
@@ -206,8 +211,8 @@ public class ControladorUbicacion {
         ArrayList<dtoUbicacion> lista = new ArrayList<>();
 
         try {
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
-
+            //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             String Consulta = "select p.nombre 'articulo', s.cantidad, 'cantidad', lu.nombre 'lugar' , se.nombre 'sector', e.descripcion 'estante'\n"
                     + "from producto p join stock s on p.cod_producto = s.cod_producto\n"
                     + "join ubicacion u on s.id_ubicacion = u.id_ubicacion \n"
@@ -244,7 +249,8 @@ public class ControladorUbicacion {
     public boolean modificarUbicacionAlmacen(Stock stock , int cod){
         boolean x = false;
          try {
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             PreparedStatement ps = conexion.prepareStatement("update produccion set fecha = ? , cantidadProduccion = ? where id = ?");
             
            // ps.setString(1, stock.getFecha());
@@ -273,7 +279,8 @@ public class ControladorUbicacion {
       public void crearUbicacion2(Ubicacion ubi){
          System.out.println("comenzo el proceso");
          try{
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             PreparedStatement ps = conexion.prepareStatement("insert into ubicacion (id_estanteria) values (?)", Statement.RETURN_GENERATED_KEYS);
             
         ps.setInt(1, ubi.getEstanteria().getId());
@@ -301,8 +308,8 @@ public class ControladorUbicacion {
         ArrayList<dtoUbicacion> lista = new ArrayList<>();
 
         try {
-            Connection conexion = DriverManager.getConnection(url, usuario, contra);
-
+            //Connection conexion = DriverManager.getConnection(url, usuario, contra);
+            Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
             String Consulta = "select s.idStock 'idStock', p.nombre 'articulo' , u.cantidad  'cantidad' from stock s join ubicacion u on s.idStock = u.idStock\n" +
             " join producto p on p.codProducto = s.codProducto where u.idEstanteria is null and s.codProducto = " + id+ "" ;
             Statement st = conexion.createStatement();
