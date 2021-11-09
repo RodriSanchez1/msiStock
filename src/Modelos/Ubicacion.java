@@ -13,6 +13,15 @@ public class Ubicacion {
     private int id;
     private Estanteria estanteria; 
     private int cantidad;
+    private int idStock;
+
+    public int getIdStock() {
+        return idStock;
+    }
+
+    public void setIdStock(int idStock) {
+        this.idStock = idStock;
+    }
     
     
     public int getCantidad() {
@@ -35,6 +44,15 @@ public class Ubicacion {
     public Estanteria getEstanteria() {
         return estanteria;
     }
+
+    public Ubicacion(int id, Estanteria estanteria, int cantidad, int idStock) {
+        this.id = id;
+        this.estanteria = estanteria;
+        this.cantidad = cantidad;
+        this.idStock = idStock;
+    }
+
+
     
 
     public Ubicacion(int id, Estanteria estanteria, int cantidad) {

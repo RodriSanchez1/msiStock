@@ -5,6 +5,12 @@
  */
 package Ventana;
 
+import Controladores.controladorRemitoInterno;
+import DTO.dtoStockUbicacion;
+import DTO.dtoUbicacion;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ginin
@@ -14,11 +20,26 @@ public class Disponibilidad_Producto extends javax.swing.JFrame {
     /**
      * Creates new form Carga_Producto
      */
+    DefaultTableModel modelo;
     public Disponibilidad_Producto() {
         initComponents();
+        fillTable();
         
     }
 
+    public void fillTable(){
+        controladorRemitoInterno controladorRemito = new controladorRemitoInterno();
+        ArrayList<dtoStockUbicacion> listaDto = controladorRemito.obtenerStock();
+                modelo = new DefaultTableModel();
+
+        modelo.setColumnIdentifiers(new String[]{"Código ubicación", " Artículo", "Cantidad disponible"});
+
+//        for (dtoStockUbicacion dto : listaDto) {
+//            modelo.addRow(new Object[]{dto.getIdubi(), dto.getNombreArticulo(), dto.getCantidad()});
+//            jTable.setModel(modelo);
+//           // cantProd = dto.getCantidad();
+//        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

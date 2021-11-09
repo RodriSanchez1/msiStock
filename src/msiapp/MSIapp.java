@@ -42,7 +42,7 @@ public class MSIapp {
        // new CrearUsario().setVisible(true);
         //new movInterno("admin").setVisible(true);
         new VentanaLogin().setVisible(true);
-        new Ubicar_ProductoLista().setVisible(true);
+       // new Ubicar_ProductoLista().setVisible(true);
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         } catch (ClassNotFoundException e) {

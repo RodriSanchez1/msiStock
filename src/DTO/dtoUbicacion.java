@@ -17,6 +17,35 @@ public class dtoUbicacion {
     private String nombreSector;
     private String nombreEstante;
     private int cantidad;
+    private int idStock;
+
+    public Integer getIdUbi() {
+        return idUbi;
+    }
+
+    public void setIdUbi(Integer idUbi) {
+        this.idUbi = idUbi;
+    }
+
+    public int getIdStock() {
+        return idStock;
+    }
+
+    public void setIdStock(int idStock) {
+        this.idStock = idStock;
+    }
+
+    public dtoUbicacion(Integer idUbi, int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad, int idStock) {
+        this.idUbi = idUbi;
+        this.codArticulo = codArticulo;
+        this.nombreArticulo = nombreArticulo;
+        this.nombreLugar = nombreLugar;
+        this.nombreSector = nombreSector;
+        this.nombreEstante = nombreEstante;
+        this.cantidad = cantidad;
+        this.idStock = idStock;
+    }
+    
 
     public int getIdubi() {
         return idUbi;
@@ -77,11 +106,12 @@ public class dtoUbicacion {
     } 
     
     
-    public dtoUbicacion(int idUbi, int codArticulo, String nombreArticulo, int cantidad) {
+    public dtoUbicacion(int idUbi, int codArticulo, String nombreArticulo, int cantidad,int idStock) {
         this.idUbi= idUbi; 
         this.codArticulo = codArticulo;
         this.nombreArticulo = nombreArticulo;
         this.cantidad = cantidad;
+        this.idStock = idStock;
     }
 
     public dtoUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad) {
