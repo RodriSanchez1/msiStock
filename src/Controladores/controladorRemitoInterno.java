@@ -31,8 +31,8 @@ public class controladorRemitoInterno {
     private void abrirConexion() {
 
         try {
-            //con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
-            con = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
+            con = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
+            //con = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -68,7 +68,9 @@ public class controladorRemitoInterno {
 
     public boolean insertarNuevoRemitoEntrada(Date fecha, int TipoMovimiento, int legajoUser, ArrayList<dtoDetalleRemito> detalleRemito) throws SQLException {
         boolean succes = true;
-        Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
+        //Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
+        Connection conexion = DriverManager.getConnection("jdbc:sqlserver://db-instance-rs.cetddq7pslga.sa-east-1.rds.amazonaws.com;databaseName=easyStock", "admin", "admin1234");
+        
         java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
         System.out.println("Entro aca");
         // PreparedStatement stock = null, remito = null, detalleRemito = null;

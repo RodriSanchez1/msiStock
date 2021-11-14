@@ -18,6 +18,25 @@ public class dtoUbicacion {
     private String nombreEstante;
     private int cantidad;
     private int idStock;
+    private String formaVenta;
+    private int idEstanteria;
+
+    public int getIdEstanteria() {
+        return idEstanteria;
+    }
+
+    public void setIdEstanteria(int idEstanteria) {
+        this.idEstanteria = idEstanteria;
+    }
+
+    public String getFormaVenta() {
+        return formaVenta;
+    }
+
+    public void setFormaVenta(String formaVenta) {
+        this.formaVenta = formaVenta;
+    }
+
 
     public Integer getIdUbi() {
         return idUbi;
@@ -106,13 +125,46 @@ public class dtoUbicacion {
     } 
     
     
-    public dtoUbicacion(int idUbi, int codArticulo, String nombreArticulo, int cantidad,int idStock) {
+    public dtoUbicacion(int idUbi, int codArticulo, String nombreArticulo, int cantidad,int idStock, int idFormaVenta) {
         this.idUbi= idUbi; 
         this.codArticulo = codArticulo;
         this.nombreArticulo = nombreArticulo;
         this.cantidad = cantidad;
         this.idStock = idStock;
+        if(idFormaVenta == 1){
+            this.formaVenta = "Online";
+        }else{
+           this.formaVenta = "Presencial";
+        }
+        
     }
+    public dtoUbicacion(int idUbi, int codArticulo,int idEstanteria, String nombreArticulo, int cantidad,int idStock, int idFormaVenta) {
+        this.idUbi= idUbi; 
+        this.codArticulo = codArticulo;
+        this.nombreArticulo = nombreArticulo;
+        this.cantidad = cantidad;
+        this.idStock = idStock;
+        this.idEstanteria = idEstanteria;
+        if(idFormaVenta == 1){
+            this.formaVenta = "Online";
+        }else{
+           this.formaVenta = "Presencial";
+        }
+        
+    }
+
+    public dtoUbicacion(Integer idUbi, int codArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad, String formaVenta, int idEstanteria, int idStock) {
+        this.idUbi = idUbi;
+        this.codArticulo = codArticulo;
+        this.nombreLugar = nombreLugar;
+        this.nombreSector = nombreSector;
+        this.nombreEstante = nombreEstante;
+        this.cantidad = cantidad;
+        this.formaVenta = formaVenta;
+        this.idEstanteria = idEstanteria;
+        this.idStock = idStock;
+    }
+
 
     public dtoUbicacion(int codArticulo, String nombreArticulo, String nombreLugar, String nombreSector, String nombreEstante, int cantidad) {
         this.codArticulo = codArticulo;

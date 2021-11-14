@@ -5,6 +5,15 @@
  */
 package Ventana;
 
+import Controladores.controladorProducto;
+import DTO.dtoListadoFaltantes;
+import DTO.dtoUbicacion;
+import Modelos.FormaVenta;
+import Modelos.TipoMovimiento;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ginin
@@ -14,9 +23,45 @@ public class Listado_Faltantes_Productos extends javax.swing.JFrame {
     /**
      * Creates new form Carga_Producto
      */
+    DefaultTableModel modelo;
+
     public Listado_Faltantes_Productos() {
         initComponents();
-        
+        fillCombo();
+        fillTable(0);
+
+    }
+
+    public void fillTable(int idFormaVenta) {
+        modelo = new DefaultTableModel();
+        controladorProducto controlador = new controladorProducto();
+
+        ArrayList<dtoListadoFaltantes> dtoListadoFaltantes = controlador.obtenerListadoFaltantes();
+        modelo.setColumnIdentifiers(new String[]{"Producto", "Marca", "Forma de venta", "StockMinimo", "Stock total"});
+
+        for (dtoListadoFaltantes item : dtoListadoFaltantes) {
+            if (idFormaVenta == 0) {
+                modelo.addRow(new Object[]{item.getProducto().getNombreProducto(), item.getProducto().getMarca(), item.getFormaVenta().getDescripcion(),
+                    item.getProducto().getStockMinimo(), item.getStockTotal()});
+            };
+            if(idFormaVenta == item.getFormaVenta().getIdFormaVenta()){
+                modelo.addRow(new Object[]{item.getProducto().getNombreProducto(), item.getProducto().getMarca(), item.getFormaVenta().getDescripcion(),
+                item.getProducto().getStockMinimo(), item.getStockTotal()});
+            }
+            tableListadoFaltantes.setModel(modelo);
+        }
+    }
+
+    private void fillCombo() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<FormaVenta> lista = new ArrayList<>();
+        lista.add(new FormaVenta(0, "Todos"));
+        lista.add(new FormaVenta(1, "Online"));
+        lista.add(new FormaVenta(2, "Presencial"));
+        for (FormaVenta item : lista) {
+            model.addElement(item);
+        }
+        cmbFormaVenta.setModel(model);
     }
 
     /**
@@ -29,45 +74,33 @@ public class Listado_Faltantes_Productos extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel13 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
+        tableListadoFaltantes = new javax.swing.JTable();
+        cmbFormaVenta = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel1.setText("Consultar disponibilidad");
+        jLabel1.setText("Listado de faltantes");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 280, -1));
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel11.setText("Nombre:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 160, 30));
-
-        jButton2.setBackground(new java.awt.Color(102, 0, 0));
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 0));
-        jButton2.setText("Buscar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 110, 30));
 
         jButton3.setBackground(new java.awt.Color(102, 0, 0));
         jButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 0));
         jButton3.setText("Salir");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 100, 30));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, 100, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableListadoFaltantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -75,30 +108,41 @@ public class Listado_Faltantes_Productos extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "código", "cantidad disponible", "marca", "nombre", "tamaño"
+                "Producto", "Marca", "Forma de venta", "Stock total", "Stock minimo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableListadoFaltantes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 600, 260));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 550, 250));
 
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel13.setText("Codigo:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 160, 30));
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 160, 30));
+        cmbFormaVenta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbFormaVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFormaVentaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbFormaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 170, -1));
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel14.setText("Marca:");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel11.setText("Filtrar por forma de venta:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbFormaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFormaVentaActionPerformed
+        FormaVenta formaVenta = (FormaVenta) cmbFormaVenta.getSelectedItem();
+
+        fillTable(formaVenta.getIdFormaVenta());
+    }//GEN-LAST:event_cmbFormaVentaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,16 +196,11 @@ public class Listado_Faltantes_Productos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> cmbFormaVenta;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTable tableListadoFaltantes;
     // End of variables declaration//GEN-END:variables
 }

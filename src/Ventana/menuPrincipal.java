@@ -307,7 +307,8 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAuxAlmaUbicarProActionPerformed
 
     private void btnAuxAlmaModificarUbiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlmaModificarUbiActionPerformed
-        // TODO add your handling code here:
+       Modificar_Ubicacion_Producto mu = new  Modificar_Ubicacion_Producto();
+       mu.setVisible(true);
     }//GEN-LAST:event_btnAuxAlmaModificarUbiActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
@@ -321,7 +322,8 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAuxRec1ActionPerformed
 
     private void btnEncDep4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep4ActionPerformed
-        // TODO add your handling code here:
+        Listado_Faltantes_Productos listadoFaltantes = new Listado_Faltantes_Productos();
+        listadoFaltantes.setVisible(true);
     }//GEN-LAST:event_btnEncDep4ActionPerformed
 
     private void btnEncDep7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep7ActionPerformed

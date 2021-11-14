@@ -204,25 +204,30 @@ public class ControladorUbicacion {
         try {
             //Connection conexion = DriverManager.getConnection(url, usuario, contra);
             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
-            String Consulta = "select p.nombre 'articulo', s.cantidad, 'cantidad', lu.nombre 'lugar' , se.nombre 'sector', e.descripcion 'estante'\n"
-                    + "from producto p join stock s on p.cod_producto = s.cod_producto\n"
-                    + "join ubicacion u on s.id_ubicacion = u.id_ubicacion \n"
-                    + "join Estanteria e on e.id_estanteria = u.id_estanteria\n"
-                    + "join sector se on se.id_sector = e.id_sector\n"
-                    + "join lugar_almacenamiento lu on se.lugar_almacenamiento = lu.cod_almacenamiento\n"
-                    + "where p.cod_producto = " + id + " and lu.nombre like '%Depósit%'";
+            String Consulta = "select fv.descripcion 'formaVenta', u.cantidad 'cantidad', lu.nombre 'lugar' , se.nombre 'sector', e.descripcion 'estante',\n" +
+"                     u.idUbicacion 'idUbicacion', u.idEstanteria 'idEstanteria', s.idStock 'idStock' from producto p join stock s on p.codProducto = s.codProducto\n" +
+"					 join formaVenta fv on fv.idFormaVenta = s.idFormaVenta\n" +
+"                     join ubicacion u on s.idStock = u.idStock \n" +
+"                     join Estanteria e on e.idEstanteria = u.idEstanteria\n" +
+"                     join sector se on se.idSector = e.idSector\n" +
+"                     join lugarAlmacenamiento lu on se.lugarAlmacenamiento = lu.codAlmacenamiento\n" +
+"                    where u.cantidad not like 0 and  p.codProducto = " + id;
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
 
             while (rs.next()) {
-
-                String nombreProd = rs.getString("articulo");
-                int cant = rs.getInt("cantidad");
+                int idUbicacion = rs.getInt("idUbicacion");
+                
                 String nombreLugar = rs.getString("lugar");
                 String nombreSector = rs.getString("sector");
                 String estanteria = rs.getString("estante");
+                int cant = rs.getInt("cantidad");
+                String formaVenta = rs.getString("formaVenta");
+                int idEstanteria = rs.getInt("idEstanteria");
+                int idStock = rs.getInt("idStock");
+                
 
-                dtoUbicacion dto = new dtoUbicacion(nombreProd, cant, nombreLugar, nombreSector, estanteria);
+                dtoUbicacion dto = new dtoUbicacion(idUbicacion,id, nombreLugar, nombreSector, estanteria, cant, formaVenta, idEstanteria,idStock);
                 lista.add(dto);
 
             }
@@ -295,7 +300,7 @@ public class ControladorUbicacion {
             Connection conexion = DriverManager.getConnection("jdbc:sqlserver://127.0.0.1:1433;databaseName=easyStock; integratedsecurity=true");
 
             // Connection conexion = DriverManager.getConnection(url, usuario, contra);
-            String Consulta = "select u.idUbicacion 'idUbicacion', p.nombre 'articulo' , u.cantidad  'cantidad', u.idStock 'idStock' from stock s join ubicacion u on s.idStock = u.idStock\n"
+            String Consulta = "select u.idUbicacion 'idUbicacion', p.nombre 'articulo' , u.cantidad  'cantidad', u.idStock 'idStock', s.idFormaVenta 'idFormaVenta', u.idEstanteria 'idEstanteria' from stock s join ubicacion u on s.idStock = u.idStock\n"
                     + " join producto p on p.codProducto = s.codProducto where u.idEstanteria is null and s.codProducto = " + id + " and cantidad > 0";
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(Consulta);
@@ -303,11 +308,13 @@ public class ControladorUbicacion {
             while (rs.next()) {
 
                 Integer idubi = rs.getInt("idUbicacion");
+                Integer idEstanteria = rs.getInt("idEstanteria");
                 String nombreProd = rs.getString("articulo");
                 int cant = rs.getInt("cantidad");
                 int idStock = rs.getInt("idStock");
+                int idFormaVenta = rs.getInt("idFormaVenta");
 
-                dtoUbicacion dto = new dtoUbicacion(idubi, id, nombreProd, cant,idStock);
+                dtoUbicacion dto = new dtoUbicacion(idubi, id,idEstanteria, nombreProd, cant,idStock,idFormaVenta);
                 lista.add(dto);
 
             }

@@ -6,6 +6,7 @@
 package Ventana;
 
 import Controladores.ControladorUbicacion;
+import Controladores.controladorProducto;
 import DTO.dtoUbicacion;
 import Modelos.Estanteria;
 import Modelos.FormaVenta;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +44,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         initComponents();
         controlador = new ControladorUbicacion();
         this.setTitle("ubicación de productos");
-
+        fillComboProducto();
         this.cargarComboLugarUbicacion();
         //cargarSector();
         //cargarEstanteria();
@@ -58,6 +60,16 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
             }
         });
 
+    }
+        public void fillComboProducto() {
+        JComboBox<String> comboBox = new JComboBox<>();
+        controladorProducto controlador = new controladorProducto();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<Producto> lista = controlador.obtenerProductosParaUbicar();
+        for (Producto producto : lista) {
+            model.addElement(producto);
+        }
+        cmbProducto.setModel(model);
     }
 
     public void cargarComboLugarUbicacion() {
@@ -125,9 +137,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        txtCodigo = new javax.swing.JTextField();
         cboEstanteria = new javax.swing.JComboBox();
         cboSector = new javax.swing.JComboBox();
         btnBuscar = new javax.swing.JButton();
@@ -138,9 +148,9 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         btnCargar = new javax.swing.JButton();
+        cmbProducto = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,13 +169,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(153, 0, 0));
         jLabel7.setText("Cantidad:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel11.setText("Codigo:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 260, 30));
-        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 160, 30));
 
         getContentPane().add(cboEstanteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 530, 250, 30));
 
@@ -180,7 +184,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 160, 50));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 160, 50));
 
         btnCancelar.setBackground(new java.awt.Color(102, 0, 0));
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -212,29 +216,15 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Código de stock", "Artículo", "Cantidad disponible"
+                "Forma de venta", "Artículo", "Cantidad a ubicar"
             }
         ));
         jScrollPane1.setViewportView(jTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 530, 230));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 530, 160));
 
         btnCargar.setBackground(new java.awt.Color(102, 0, 0));
         btnCargar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -247,23 +237,16 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         });
         getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 570, 110, 40));
 
+        cmbProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 160, -1));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel11.setText("Producto:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
+
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 600, 710));
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable3);
-
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 490, 200));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -273,17 +256,18 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
         int cod = 0;
 
         try {
-            cod = Integer.parseInt(txtCodigo.getText());
+            Producto productto = (Producto)cmbProducto.getSelectedItem();
+            cod = productto.getCodigo();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "el campo ID  solo acepta números enteros");
         }
         listaDto = controlador.buscarProductoParaUbicar(cod);
         modelo = new DefaultTableModel();
 
-        modelo.setColumnIdentifiers(new String[]{"Código ubicación", " Artículo", "Cantidad disponible"});
+        modelo.setColumnIdentifiers(new String[]{"Forma de venta", " Artículo", "Cantidad a ubicar"});
 
         for (dtoUbicacion dto : listaDto) {
-            modelo.addRow(new Object[]{dto.getIdubi(), dto.getNombreArticulo(), dto.getCantidad()});
+            modelo.addRow(new Object[]{dto.getFormaVenta(), dto.getNombreArticulo(), dto.getCantidad()});
             jTable.setModel(modelo);
            // cantProd = dto.getCantidad();
         }
@@ -306,7 +290,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
 
             int column = 0;
             int column2 = 2;
-            int idUbi = (Integer) jTable.getModel().getValueAt(row, column);
+            int idUbi = listaDto.get(row).getIdUbi();
             Estanteria estanteria = (Estanteria) cboEstanteria.getSelectedItem();
             int cant = (Integer) jTable.getModel().getValueAt(row, column2);
             int cantidad = 0;
@@ -331,6 +315,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
             }
 
             borrarFilas(modelo);
+            fillComboProducto();
 
         } catch (Error e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -359,6 +344,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
     private javax.swing.JComboBox cboEstanteria;
     private javax.swing.JComboBox cboLugarUbicacion;
     private javax.swing.JComboBox cboSector;
+    private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
@@ -366,10 +352,7 @@ public class Ubicar_ProductoLista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

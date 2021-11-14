@@ -6,14 +6,23 @@
 package Ventana;
 
 import Controladores.ControladorUbicacion;
+import Controladores.controladorProducto;
 import DTO.dtoUbicacion;
 
 import Modelos.Estanteria;
 import Modelos.LugarUbicacion;
+import Modelos.Producto;
 import Modelos.Sector;
 import Modelos.Stock;
+import Modelos.Ubicacion;
+import static Ventana.Ubicar_ProductoLista.borrarFilas;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.lang.System.console;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sun.rmi.runtime.Log;
@@ -26,6 +35,9 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
 
     ControladorUbicacion controlador;
     DefaultTableModel modelo;
+    int cantProd;
+    ArrayList<dtoUbicacion> listaUbicaciones;
+
     /**
      * Creates new form Carga_Producto
      */
@@ -33,10 +45,80 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
         initComponents();
         this.setTitle("reubicar productos");
         controlador = new ControladorUbicacion();
-        
-    
+        fillComboProducto();
+        this.cargarComboLugarUbicacion();
+        //cargarSector();
+        //cargarEstanteria();
+
+        cboLugarUbicacion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cargarSector();
+            }
+        });
+        cboSector.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cargarEstanteria();
+            }
+        });
     }
-    
+
+    public void cargarComboLugarUbicacion() {
+        int id;
+        ArrayList<LugarUbicacion> lista = (controlador.obtenerLugarUbicacion());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (LugarUbicacion lugar : lista) {
+            model.addElement(lugar);
+            id = lugar.getCodigo();
+        }
+        cboLugarUbicacion.setModel(model);
+    }
+
+    private int obtenerIdLugar() {
+        int id = 0;
+        LugarUbicacion lugar = (LugarUbicacion) cboLugarUbicacion.getSelectedItem();
+        id = lugar.getCodigo();
+        return id;
+    }
+
+    private int obtenerIdSector() {
+        int id = 0;
+        Sector sector = (Sector) cboSector.getSelectedItem();
+        id = sector.getId();
+        return id;
+    }
+
+    public void cargarSector() {
+        ArrayList<Sector> lista = controlador.obtenerSector(obtenerIdLugar());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (Sector sector : lista) {
+            model.addElement(sector);
+        }
+        cboSector.setModel(model);
+
+    }
+
+    public void cargarEstanteria() {
+        ArrayList<Estanteria> lista = controlador.obtenerEstanteria(obtenerIdSector());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (Estanteria estanteria : lista) {
+            model.addElement(estanteria);
+        }
+        cboEstanteria.setModel(model);
+    }
+
+    public void fillComboProducto() {
+        JComboBox<String> comboBox = new JComboBox<>();
+        controladorProducto controlador = new controladorProducto();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<Producto> lista = controlador.obtenerProductosParaModificarUbicacion();
+        for (Producto producto : lista) {
+            model.addElement(producto);
+        }
+        cmbProducto.setModel(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,19 +135,19 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        txtCodigo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         cboSector = new javax.swing.JComboBox<>();
         btnActualizar = new javax.swing.JButton();
-        cboLugar = new javax.swing.JComboBox();
+        cboLugarUbicacion = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         cboEstanteria = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        cmbProducto = new javax.swing.JComboBox<>();
         Fondo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 3, 24)); // NOI18N
@@ -90,10 +172,9 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel11.setText("Codigo:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+        jLabel11.setText("Producto:");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 180, 30));
-        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 170, 30));
 
         btnBuscar.setBackground(new java.awt.Color(102, 0, 0));
         btnBuscar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -104,7 +185,7 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 100, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 100, 30));
 
         jButton3.setBackground(new java.awt.Color(102, 0, 0));
         jButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -131,12 +212,12 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
         });
         getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 550, 110, 30));
 
-        cboLugar.addActionListener(new java.awt.event.ActionListener() {
+        cboLugarUbicacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboLugarActionPerformed(evt);
+                cboLugarUbicacionActionPerformed(evt);
             }
         });
-        getContentPane().add(cboLugar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 240, 30));
+        getContentPane().add(cboLugarUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 240, 30));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 0, 0));
@@ -178,6 +259,9 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 600, 190));
 
+        cmbProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(cmbProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 230, -1));
+
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, -1));
 
@@ -186,28 +270,22 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-         int cod = 0;
-        try{
-            cod = Integer.parseInt(txtCodigo.getText());
+        int cod = 0;
+        try {
+            Producto producto = (Producto) cmbProducto.getSelectedItem();
+            cod = producto.getCodigo();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "el campo ID  solo acepta números enteros");
         }
-        catch(Exception e){
-             JOptionPane.showMessageDialog(this, "el campo ID  solo acepta números enteros");
+        listaUbicaciones = controlador.buscarProducto(cod);
+        modelo = new DefaultTableModel();
+
+        modelo.setColumnIdentifiers(new String[]{"Forma de venta", "cantidad", "Lugar Ubicacion", "Sector", "Estantería"});
+
+        for (dtoUbicacion dto : listaUbicaciones) {
+            modelo.addRow(new Object[]{dto.getFormaVenta(), dto.getCantidad(), dto.getNombreLugar(), dto.getNombreSector(), dto.getNombreEstante()});
+            jTable.setModel(modelo);
         }
-         ArrayList<dtoUbicacion> lista = controlador.buscarProducto(cod);
-           modelo = new DefaultTableModel();
-          
-          modelo.setColumnIdentifiers(new String[]{ "nombre", "cantidad", "Lugar Ubicacion", "Sector", "Estantería"});
-          
-          for(dtoUbicacion dto : lista){
-              modelo.addRow(new Object[] {dto.getNombreArticulo(), dto.getCantidad(), dto.getNombreLugar(), dto.getNombreSector(), dto.getNombreEstante()});
-              jTable.setModel(modelo);
-              
-             
-              
-              
-                 
-          }
-          
 
 
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -219,49 +297,114 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        int row = jTable.getSelectedRow();
-        if (jTable.getSelectedRow() < 1){
-             JOptionPane.showMessageDialog(this, "Debe seleccionar un item de la tabla a modificar");
-        }
-       dtoUbicacion dto = new dtoUbicacion();
-       dto.setNombreArticulo( (String)jTable.getValueAt(row, 0));
-        System.out.println(dto);
-        //String nombreArt = (String)jTable.getValueAt(row, 0);
-      
-   
-        
-        int cantidad;
-   
-        
-        
+//        int row = jTable.getSelectedRow();
+//        if (jTable.getSelectedRow() < 1){
+//             JOptionPane.showMessageDialog(this, "Debe seleccionar un item de la tabla a modificar");
+//        }
+//       dtoUbicacion dto = new dtoUbicacion();
+//       dto.setNombreArticulo( (String)jTable.getValueAt(row, 0));
+//        System.out.println(dto);
+//        //String nombreArt = (String)jTable.getValueAt(row, 0);
+//      
+//   
+//        
+//        int cantidad;
+//   
+//        
+//        
+//        try {
+//            cantidad = Integer.parseInt(txtCantidad.getText());
+//            
+//        }
+//        catch(Exception e){
+//            JOptionPane.showMessageDialog(this, "el ID y la cantidad de producción solo puede contener numeros enteros");
+//        }
+//         LugarUbicacion lugar = (LugarUbicacion) cboLugar.getSelectedItem();
+//         Sector sector = (Sector) cboSector.getSelectedItem();
+//         Estanteria estante = (Estanteria) cboEstanteria.getSelectedItem();
         try {
+            int row = jTable.getSelectedRow();
+            if (jTable.getSelectedRow() < 0) {
+                throw new Error("Debe ingresar una cantidad menor a la cantidad en ubicacion");
+            }
+
+            int column = 0;
+            int column2 = 2;
+            int idUbi = listaUbicaciones.get(row).getIdUbi();
+            String formaVenta = (String) jTable.getModel().getValueAt(row, column);
+            Estanteria estanteria = (Estanteria) cboEstanteria.getSelectedItem();
+            int cant = listaUbicaciones.get(row).getCantidad();;
+
+            int cantidad = 0;
             cantidad = Integer.parseInt(txtCantidad.getText());
+            int idStock = listaUbicaciones.get(row).getIdStock();
+            if (cantidad == cant) {
+                //controlador.
+                Ubicacion ubi = new Ubicacion(idUbi, estanteria, cant); //idubi, idEstanteria cant
+                boolean flag = false;
+                for (dtoUbicacion ubicacion : listaUbicaciones) {
+                    if (ubi.getEstanteria().getId() == ubicacion.getIdEstanteria() && ubicacion.getFormaVenta().equals(formaVenta)) {
+                        controlador.modificarUbicacion(idUbi, ubi.getEstanteria().getId(), 0);
+                        controlador.modificarUbicacion(ubicacion.getIdUbi(), ubicacion.getIdEstanteria(), cantidad + ubicacion.getCantidad());
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    controlador.modificarUbicacion(idUbi, estanteria.getId(), cant);
+                }
+
+            } else if (cant > cantidad) {
+                int cantidadSobrante = 0;
+                cantidadSobrante = cant - cantidad;
+                // Ubicacion ubi = new Ubicacion(idUbi,estanteria,cantidadSobrante); 
+
+                controlador.modificarUbicacion2(idUbi, cantidadSobrante);
+                boolean flag = false;
+                for (dtoUbicacion ubicacion : listaUbicaciones) {
+                    System.out.println(estanteria.getId());
+                    System.out.println(ubicacion.getIdEstanteria());
+                    if (estanteria.getId() == ubicacion.getIdEstanteria() && ubicacion.getFormaVenta().equals(formaVenta)) {
+                        controlador.modificarUbicacion(ubicacion.getIdUbi(), ubicacion.getIdEstanteria(), cantidad + ubicacion.getCantidad());
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    Ubicacion ubi2 = new Ubicacion(0, estanteria, cantidad, idStock);
+                    controlador.crearUbicacion(ubi2);
+                }
+
+            } else {
+                throw new Error("La cantidad a guardar no puede ser mayor a la cantidad existente");
+            }
             
+            borrarFilas(modelo);
+            fillComboProducto();
+
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "el campo ID y cantidad solo aceptan números enteros");
+
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, "el ID y la cantidad de producción solo puede contener numeros enteros");
-        }
-         LugarUbicacion lugar = (LugarUbicacion) cboLugar.getSelectedItem();
-         Sector sector = (Sector) cboSector.getSelectedItem();
-         Estanteria estante = (Estanteria) cboEstanteria.getSelectedItem();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
-    private void cboLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLugarActionPerformed
+    private void cboLugarUbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLugarUbicacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboLugarActionPerformed
+    }//GEN-LAST:event_cboLugarUbicacionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cboEstanteria;
-    private javax.swing.JComboBox cboLugar;
+    private javax.swing.JComboBox cboLugarUbicacion;
     private javax.swing.JComboBox<String> cboSector;
+    private javax.swing.JComboBox<String> cmbProducto;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -272,6 +415,5 @@ public class Modificar_Ubicacion_Producto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }
