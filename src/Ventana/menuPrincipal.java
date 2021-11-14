@@ -420,7 +420,7 @@ public class menuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEncDep4ActionPerformed
 
     private void btnEncDep6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep6ActionPerformed
-        // TODO add your handling code here:
+        new Porcentaje_Venta_OnlinePresencial().setVisible(true);
     }//GEN-LAST:event_btnEncDep6ActionPerformed
 
     private void btnEncDep7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep7ActionPerformed
