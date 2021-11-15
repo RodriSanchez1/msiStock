@@ -295,6 +295,7 @@ public class CrearUsario extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al encontrar usuario");
+            System.out.println(e);
             limpiarCampos();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed

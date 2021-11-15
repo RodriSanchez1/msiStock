@@ -20,6 +20,7 @@ import Ventana.Modificar_Remito_Salida;
 import Ventana.Modificar_Ubicacion_Producto;
 import Ventana.Porcentaje_Venta_OnlinePresencial;
 import Ventana.Ubicar_Producto;
+import Ventana.Ubicar_ProductoLista;
 import Ventana.VentanaLogin;
 import Ventana.menuPrincipal;
 import Ventana.movInterno;
@@ -41,6 +42,7 @@ public class MSIapp {
        // new CrearUsario().setVisible(true);
         //new movInterno("admin").setVisible(true);
         new VentanaLogin().setVisible(true);
+       // new Ubicar_ProductoLista().setVisible(true);
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         } catch (ClassNotFoundException e) {
