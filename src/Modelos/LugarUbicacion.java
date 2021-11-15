@@ -37,12 +37,21 @@ public class LugarUbicacion {
         this.nombre = nombre;
         this.sector = sector;
     }
+    
+     public LugarUbicacion(int codigo, String nombre) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        
+    }
 
     public LugarUbicacion() {
     }
 
     @Override
     public String toString() {
+        return  nombre ;
+    }
+     public String toString2() {
         return "LugarUbicacion{" + "codigo=" + codigo + ", nombre=" + nombre + ", sector=" + sector + '}';
     }
     

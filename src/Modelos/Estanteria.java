@@ -39,7 +39,7 @@ public class Estanteria {
 
     @Override
     public String toString() {
-        return "Estanteria{" + "id=" + id + ", descripcion=" + descripcion + '}';
+        return  descripcion ;
     }
     
     

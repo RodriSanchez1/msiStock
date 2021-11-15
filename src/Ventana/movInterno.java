@@ -432,9 +432,9 @@ public class movInterno extends javax.swing.JFrame {
 
             controladorRemitoInterno controlador = new controladorRemitoInterno();
             if (this.tipoMovimiento) {
-                controlador.insertarNuevoRemitoEntrada(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+                controlador.insertarNuevoRemitoEntrada(fecha, tipoMovimiento.getId(), user.getLegajo(), listaDetalle);
             } else {
-                controlador.insertarNuevoRemitoSalida(fecha, tipoMovimiento.getId(), 1, listaDetalle);
+                controlador.insertarNuevoRemitoSalida(fecha, tipoMovimiento.getId(), user.getLegajo(), listaDetalle);
                 listaStock = controlador.obtenerStock();
             }
             model.setRowCount(0);

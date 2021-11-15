@@ -11,8 +11,7 @@ package Modelos;
  */
 public class Stock {
     private int idStock;
-    private int codProducto;
-    private int cantidad;
+    private Producto producto;
     private Ubicacion ubicacion;
     private FormaVenta formaVenta;
 
@@ -28,46 +27,30 @@ public class Stock {
         this.idStock = idStock;
     }
 
-    public int getCodProducto() {
-        return codProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setCodProducto(int codProducto) {
-        this.codProducto = codProducto;
-    }
 
-    public int getCantidad() {
-        return cantidad;
-    }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
 
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
    
-    public Stock(int idStock, int codProducto, int cantidad, Ubicacion ubicacion, FormaVenta formaVenta) {
+
+    public Stock(int idStock, Producto producto, int cantidad, Ubicacion ubicacion, FormaVenta formaVenta) {
         this.idStock = idStock;
-        this.codProducto = codProducto;
-        this.cantidad = cantidad;
+        this.producto = producto;
+       
         this.ubicacion = ubicacion;
         this.formaVenta = formaVenta;
     }
 
-    public Stock(int codProducto, int cantidad, FormaVenta formaVenta) {
-        this.codProducto = codProducto;
-        this.cantidad = cantidad;
-        this.formaVenta = formaVenta;
-    }
-
-
-
-    public Stock() {
-    }
-
     @Override
     public String toString() {
-        return "Stock{" + "idStock=" + idStock + ", codProducto=" + codProducto + ", cantidad=" + cantidad + ", ubicacion=" + ubicacion + ", formaVenta=" + formaVenta + '}';
+        return "Stock{" + "idStock=" + idStock + ", producto=" + producto +  ", ubicacion=" + ubicacion + ", formaVenta=" + formaVenta + '}';
     }
-    
-    
+
+  
 }
