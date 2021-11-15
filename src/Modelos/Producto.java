@@ -87,6 +87,13 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
+    public Producto(int codigo, String nombreProducto, int stockMinimo, Marca marca) {
+        this.codigo = codigo;
+        this.nombreProducto = nombreProducto;
+        this.stockMinimo = stockMinimo;
+        this.marca = marca;
+    }
+
     public Producto() {
     }
 

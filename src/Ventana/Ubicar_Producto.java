@@ -5,18 +5,109 @@
  */
 package Ventana;
 
+import Controladores.ControladorUbicacion;
+import Modelos.Estanteria;
+import Modelos.FormaVenta;
+import Modelos.LugarUbicacion;
+import Modelos.Producto;
+import Modelos.Sector;
+import Modelos.Stock;
+import Modelos.Ubicacion;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ginin
  */
 public class Ubicar_Producto extends javax.swing.JFrame {
 
+    ControladorUbicacion controlador;
+
     /**
      * Creates new form Carga_Producto
      */
     public Ubicar_Producto() {
         initComponents();
+        controlador = new ControladorUbicacion();
+        this.setTitle("ubicación de productos");
+        this.cargarComboFormaVenta();
+        this.cargarComboLugarUbicacion();
+        //cargarSector();
+        //cargarEstanteria();
         
+
+        cboLugarUbicacion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cargarSector();
+            }
+        });
+        cboSector.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cargarEstanteria();
+            }
+        });
+
+    }
+
+    public void cargarComboFormaVenta() {
+        ArrayList<FormaVenta> lista = controlador.obtenerFormaVenta();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (FormaVenta forma : lista) {
+            model.addElement(forma);
+        }
+        cboFormaVenta.setModel(model);
+    }
+
+    public void cargarComboLugarUbicacion() {
+        int id;
+        ArrayList<LugarUbicacion> lista = (controlador.obtenerLugarUbicacion());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (LugarUbicacion lugar : lista) {
+            model.addElement(lugar);
+           id =  lugar.getCodigo();
+        }
+        cboLugarUbicacion.setModel(model);
+    }
+    
+    private int obtenerIdLugar(){
+        int id = 0;
+        LugarUbicacion  lugar = (LugarUbicacion) cboLugarUbicacion.getSelectedItem();
+        id = lugar.getCodigo();
+        return id;
+    }
+    
+     private int obtenerIdSector(){
+        int id = 0;
+        Sector  sector = (Sector) cboSector.getSelectedItem();
+        id = sector.getId();
+        return id;
+    }
+
+    public void cargarSector() {
+        ArrayList<Sector> lista = controlador.obtenerSector(obtenerIdLugar());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (Sector sector : lista) {
+            model.addElement(sector);
+        }
+        cboSector.setModel(model);
+
+    }
+
+    public void cargarEstanteria() {
+        ArrayList<Estanteria> lista = controlador.obtenerEstanteria(obtenerIdSector());
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        for (Estanteria estanteria : lista) {
+            model.addElement(estanteria);
+        }
+        cboEstanteria.setModel(model);
     }
 
     /**
@@ -28,129 +119,156 @@ public class Ubicar_Producto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        cboFormaVenta = new javax.swing.JComboBox();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        txtCantidad = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
+        cboEstanteria = new javax.swing.JComboBox();
+        cboSector = new javax.swing.JComboBox();
+        btnCargar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cboLugarUbicacion = new javax.swing.JComboBox();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel4.setText("Forma de venta:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
+
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 0));
         jLabel1.setText("Ubicar producto");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 290, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 290, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel3.setText("Detalle Ubicacion:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel4.setText("Lugar de almacenamiento:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
+        jLabel3.setText("Estantería");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(153, 0, 0));
         jLabel7.setText("Cantidad:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
+
+        getContentPane().add(cboFormaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 180, 30));
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(153, 0, 0));
         jLabel11.setText("Codigo:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 180, 30));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 180, 30));
+        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, 30));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        getContentPane().add(cboEstanteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 190, 30));
+
+        getContentPane().add(cboSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 230, 30));
+
+        btnCargar.setBackground(new java.awt.Color(102, 0, 0));
+        btnCargar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCargar.setForeground(new java.awt.Color(255, 255, 0));
+        btnCargar.setText("Cargar");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                btnCargarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 480, 140));
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 170, 30));
+        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 110, 40));
 
-        jButton1.setBackground(new java.awt.Color(102, 0, 0));
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 0));
-        jButton1.setText("Cargar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 530, 100, 30));
+        btnCancelar.setBackground(new java.awt.Color(102, 0, 0));
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 0));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 530, 110, 40));
 
-        jButton3.setBackground(new java.awt.Color(102, 0, 0));
-        jButton3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 0));
-        jButton3.setText("Cancelar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 530, 100, 30));
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel6.setText("Sector");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, -1, -1));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 290, 30));
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel5.setText("Lugar de almacenamiento:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, -1, -1));
+
+        getContentPane().add(cboLugarUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 360, 30));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/easyCarga.png"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        Fondo.setText("EStantería");
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 590, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        int cod = 0;
+        int cant = 0;
+
+        try {
+
+            cod = Integer.parseInt(txtCodigo.getText());
+            cant = Integer.parseInt(txtCantidad.getText());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "el campo ID y cantidad solo aceptan números enteros");
+
+        }
+        FormaVenta forma = (FormaVenta) cboFormaVenta.getSelectedItem();
+        //   LugarUbicacion lugar = (LugarUbicacion)cboLugarUbicacion.getSelectedItem();
+        // Sector sector = (Sector)cboSector.getSelectedItem();
+        Estanteria estanteria =   (Estanteria)cboEstanteria.getSelectedItem();
+
+    //    Ubicacion ubi = new Ubicacion(0, estanteria);
+
+    //    controlador.crearUbicacion(ubi);
+        Producto prod = new Producto();
+        prod.setCodigo(cod);
+
+    //    Stock stock = new Stock(0, prod, cant, ubi, forma);
+       // controlador.ubicarProducto(stock);
+
+
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ubicar_Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ubicar_Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ubicar_Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ubicar_Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Ubicar_Producto().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JComboBox cboEstanteria;
+    private javax.swing.JComboBox cboFormaVenta;
+    private javax.swing.JComboBox cboLugarUbicacion;
+    private javax.swing.JComboBox cboSector;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

@@ -43,9 +43,11 @@ public class Sector {
 
     @Override
     public String toString() {
+        return nombre ;
+    }
+    public String toString2() {
         return "Sector{" + "id=" + id + ", nombre=" + nombre + ", estanteria=" + estanteria + '}';
     }
-    
     
     
 }

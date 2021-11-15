@@ -40,39 +40,32 @@ public class menuPrincipal extends javax.swing.JFrame {
             case 2: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
-                btnVend3.setEnabled(true);
                 break;
             }
             case 3: {
                 btnVend1.setEnabled(true);
                 btnVend2.setEnabled(true);
-                btnVend3.setEnabled(true);
                 break;
             }
             case 4: {
                 btnRep1.setEnabled(true);
-                btnRep2.setEnabled(true);
                 break;
             }
             case 5: {
                 btnAuxRec1.setEnabled(true);
-                btnAuxRec2.setEnabled(true);
                 break;
             }
             case 6: {
-                btnEncDep1.setEnabled(true);
-                btnEncDep2.setEnabled(true);
-                btnEncDep3.setEnabled(true);
-                btnEncDep4.setEnabled(true);
-                btnEncDep5.setEnabled(true);
-                btnEncDep6.setEnabled(true);
-                btnEncDep7.setEnabled(true);
-                btnEncDep8.setEnabled(true);
+                btnAuxAlmaUbicarPro.setEnabled(true);
+                btnAuxAlmaModificarUbi.setEnabled(true);
+                btnAuxAlmaElimRemito.setEnabled(true);
+                btnAuxAlmaABMPro.setEnabled(true);
                 break;
             }
             case 7: {
-                btnAuxAlma1.setEnabled(true);
-                btnAuxAlma2.setEnabled(true);
+                btnEncDep4.setEnabled(true);
+                btnEncDep6.setEnabled(true);
+                btnEncDep7.setEnabled(true);
                 break;
             }
             default:
@@ -83,23 +76,17 @@ public class menuPrincipal extends javax.swing.JFrame {
 
     public void deshabilitarBotones() {
         btnAdmin.setEnabled(false);
-        btnAuxAlma1.setEnabled(false);
-        btnAuxAlma2.setEnabled(false);
+        btnAuxAlmaUbicarPro.setEnabled(false);
+        btnAuxAlmaModificarUbi.setEnabled(false);
         btnAuxRec1.setEnabled(false);
-        btnAuxRec2.setEnabled(false);
-        btnEncDep1.setEnabled(false);
-        btnEncDep2.setEnabled(false);
-        btnEncDep3.setEnabled(false);
+        btnAuxAlmaElimRemito.setEnabled(false);
         btnEncDep4.setEnabled(false);
-        btnEncDep5.setEnabled(false);
         btnEncDep6.setEnabled(false);
         btnEncDep7.setEnabled(false);
-        btnEncDep8.setEnabled(false);
+        btnAuxAlmaABMPro.setEnabled(false);
         btnRep1.setEnabled(false);
-        btnRep2.setEnabled(false);
         btnVend1.setEnabled(false);
         btnVend2.setEnabled(false);
-        btnVend3.setEnabled(false);
     }
 
     /**
@@ -111,24 +98,18 @@ public class menuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnRep2 = new javax.swing.JButton();
-        btnAuxAlma1 = new javax.swing.JButton();
+        btnAuxAlmaUbicarPro = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        btnAuxAlma2 = new javax.swing.JButton();
+        btnAuxAlmaModificarUbi = new javax.swing.JButton();
         btnAdmin = new javax.swing.JButton();
         btnAuxRec1 = new javax.swing.JButton();
-        btnAuxRec2 = new javax.swing.JButton();
-        btnEncDep1 = new javax.swing.JButton();
-        btnEncDep2 = new javax.swing.JButton();
-        btnEncDep3 = new javax.swing.JButton();
+        btnAuxAlmaElimRemito = new javax.swing.JButton();
         btnEncDep4 = new javax.swing.JButton();
-        btnEncDep5 = new javax.swing.JButton();
         btnEncDep6 = new javax.swing.JButton();
         btnEncDep7 = new javax.swing.JButton();
-        btnEncDep8 = new javax.swing.JButton();
+        btnAuxAlmaABMPro = new javax.swing.JButton();
         btnVend1 = new javax.swing.JButton();
         btnVend2 = new javax.swing.JButton();
-        btnVend3 = new javax.swing.JButton();
         btnRep1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -141,22 +122,16 @@ public class menuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnRep2.setBackground(new java.awt.Color(102, 0, 0));
-        btnRep2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnRep2.setForeground(new java.awt.Color(255, 255, 0));
-        btnRep2.setText("Entregar producto");
-        getContentPane().add(btnRep2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 630, 170, 30));
-
-        btnAuxAlma1.setBackground(new java.awt.Color(102, 0, 0));
-        btnAuxAlma1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnAuxAlma1.setForeground(new java.awt.Color(255, 255, 0));
-        btnAuxAlma1.setText("Ubicar Productos");
-        btnAuxAlma1.addActionListener(new java.awt.event.ActionListener() {
+        btnAuxAlmaUbicarPro.setBackground(new java.awt.Color(102, 0, 0));
+        btnAuxAlmaUbicarPro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAuxAlmaUbicarPro.setForeground(new java.awt.Color(255, 255, 0));
+        btnAuxAlmaUbicarPro.setText("Ubicar Productos");
+        btnAuxAlmaUbicarPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAuxAlma1ActionPerformed(evt);
+                btnAuxAlmaUbicarProActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAuxAlma1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, 30));
+        getContentPane().add(btnAuxAlmaUbicarPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, -1, 30));
 
         jButton10.setBackground(new java.awt.Color(51, 51, 51));
         jButton10.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -169,16 +144,16 @@ public class menuPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 620, 170, 50));
 
-        btnAuxAlma2.setBackground(new java.awt.Color(102, 0, 0));
-        btnAuxAlma2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnAuxAlma2.setForeground(new java.awt.Color(255, 255, 0));
-        btnAuxAlma2.setText("Modificar ubicacion de productos");
-        btnAuxAlma2.addActionListener(new java.awt.event.ActionListener() {
+        btnAuxAlmaModificarUbi.setBackground(new java.awt.Color(102, 0, 0));
+        btnAuxAlmaModificarUbi.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAuxAlmaModificarUbi.setForeground(new java.awt.Color(255, 255, 0));
+        btnAuxAlmaModificarUbi.setText("Modificar ubicacion de productos");
+        btnAuxAlmaModificarUbi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAuxAlma2ActionPerformed(evt);
+                btnAuxAlmaModificarUbiActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAuxAlma2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 270, 30));
+        getContentPane().add(btnAuxAlmaModificarUbi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 270, 30));
 
         btnAdmin.setBackground(new java.awt.Color(102, 0, 0));
         btnAdmin.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -189,7 +164,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnAdminActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 180, 30));
+        getContentPane().add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, 180, 30));
 
         btnAuxRec1.setBackground(new java.awt.Color(102, 0, 0));
         btnAuxRec1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -200,51 +175,18 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnAuxRec1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAuxRec1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 280, 30));
+        getContentPane().add(btnAuxRec1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 280, 30));
 
-        btnAuxRec2.setBackground(new java.awt.Color(102, 0, 0));
-        btnAuxRec2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnAuxRec2.setForeground(new java.awt.Color(255, 255, 0));
-        btnAuxRec2.setText("Modificar remito interno de entrada");
-        btnAuxRec2.addActionListener(new java.awt.event.ActionListener() {
+        btnAuxAlmaElimRemito.setBackground(new java.awt.Color(102, 0, 0));
+        btnAuxAlmaElimRemito.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAuxAlmaElimRemito.setForeground(new java.awt.Color(255, 255, 0));
+        btnAuxAlmaElimRemito.setText("Eliminar remitos internos");
+        btnAuxAlmaElimRemito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAuxRec2ActionPerformed(evt);
+                btnAuxAlmaElimRemitoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAuxRec2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 290, 30));
-
-        btnEncDep1.setBackground(new java.awt.Color(102, 0, 0));
-        btnEncDep1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEncDep1.setForeground(new java.awt.Color(255, 255, 0));
-        btnEncDep1.setText("Preparar envio de venta online");
-        btnEncDep1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncDep1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEncDep1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, 30));
-
-        btnEncDep2.setBackground(new java.awt.Color(102, 0, 0));
-        btnEncDep2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEncDep2.setForeground(new java.awt.Color(255, 255, 0));
-        btnEncDep2.setText("Entregar producto");
-        btnEncDep2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncDep2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEncDep2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, 170, 30));
-
-        btnEncDep3.setBackground(new java.awt.Color(102, 0, 0));
-        btnEncDep3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEncDep3.setForeground(new java.awt.Color(255, 255, 0));
-        btnEncDep3.setText("Eliminar remitos internos");
-        btnEncDep3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncDep3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEncDep3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 220, 30));
+        getContentPane().add(btnAuxAlmaElimRemito, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 220, 30));
 
         btnEncDep4.setBackground(new java.awt.Color(102, 0, 0));
         btnEncDep4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -255,18 +197,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnEncDep4ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEncDep4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 260, 30));
-
-        btnEncDep5.setBackground(new java.awt.Color(102, 0, 0));
-        btnEncDep5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEncDep5.setForeground(new java.awt.Color(255, 255, 0));
-        btnEncDep5.setText("Ingresar producto");
-        btnEncDep5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncDep5ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEncDep5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, 170, 30));
+        getContentPane().add(btnEncDep4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 450, 230, 30));
 
         btnEncDep6.setBackground(new java.awt.Color(102, 0, 0));
         btnEncDep6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -277,7 +208,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnEncDep6ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEncDep6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 250, 30));
+        getContentPane().add(btnEncDep6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 240, 30));
 
         btnEncDep7.setBackground(new java.awt.Color(102, 0, 0));
         btnEncDep7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -288,18 +219,18 @@ public class menuPrincipal extends javax.swing.JFrame {
                 btnEncDep7ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEncDep7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 280, 30));
+        getContentPane().add(btnEncDep7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 280, 30));
 
-        btnEncDep8.setBackground(new java.awt.Color(102, 0, 0));
-        btnEncDep8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnEncDep8.setForeground(new java.awt.Color(255, 255, 0));
-        btnEncDep8.setText("Modificar/Eliminar producto existente");
-        btnEncDep8.addActionListener(new java.awt.event.ActionListener() {
+        btnAuxAlmaABMPro.setBackground(new java.awt.Color(102, 0, 0));
+        btnAuxAlmaABMPro.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnAuxAlmaABMPro.setForeground(new java.awt.Color(255, 255, 0));
+        btnAuxAlmaABMPro.setText("Administrar Productos");
+        btnAuxAlmaABMPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEncDep8ActionPerformed(evt);
+                btnAuxAlmaABMProActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEncDep8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 300, 30));
+        getContentPane().add(btnAuxAlmaABMPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 300, 30));
 
         btnVend1.setBackground(new java.awt.Color(102, 0, 0));
         btnVend1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -323,17 +254,6 @@ public class menuPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(btnVend2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 230, 30));
 
-        btnVend3.setBackground(new java.awt.Color(102, 0, 0));
-        btnVend3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnVend3.setForeground(new java.awt.Color(255, 255, 0));
-        btnVend3.setText("Modificar remito interno");
-        btnVend3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVend3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnVend3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 540, 210, 30));
-
         btnRep1.setBackground(new java.awt.Color(102, 0, 0));
         btnRep1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnRep1.setForeground(new java.awt.Color(255, 255, 0));
@@ -348,32 +268,32 @@ public class menuPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 0));
         jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Auxiliar de Almacenamiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 470, 80));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 730, 150));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 0));
         jLabel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Administrador", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 290, 80));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 310, 80));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 0));
         jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Auxiliar de recepcion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 650, 80));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 350, 80));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 0));
         jLabel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Encargado de Deposito", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 770, 160));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 790, 80));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 0));
         jLabel5.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Repositor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 550, 80));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 340, 80));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 0));
         jLabel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 0), 2, true), "Vendedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 0))); // NOI18N
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 770, 80));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 560, 80));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/BotoneraMenu.png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -381,13 +301,15 @@ public class menuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAuxAlma1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlma1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAuxAlma1ActionPerformed
+    private void btnAuxAlmaUbicarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlmaUbicarProActionPerformed
+        Ubicar_ProductoLista ubicarProducto = new Ubicar_ProductoLista();
+        ubicarProducto.setVisible(true);
+    }//GEN-LAST:event_btnAuxAlmaUbicarProActionPerformed
 
-    private void btnAuxAlma2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlma2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAuxAlma2ActionPerformed
+    private void btnAuxAlmaModificarUbiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlmaModificarUbiActionPerformed
+       Modificar_Ubicacion_Producto mu = new  Modificar_Ubicacion_Producto();
+       mu.setVisible(true);
+    }//GEN-LAST:event_btnAuxAlmaModificarUbiActionPerformed
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
         CrearUsario crearUsario = new CrearUsario();
@@ -399,24 +321,9 @@ public class menuPrincipal extends javax.swing.JFrame {
         movInterno.setVisible(true);
     }//GEN-LAST:event_btnAuxRec1ActionPerformed
 
-    private void btnAuxRec2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxRec2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAuxRec2ActionPerformed
-
-    private void btnEncDep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEncDep1ActionPerformed
-
-    private void btnEncDep2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEncDep2ActionPerformed
-
-    private void btnEncDep3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEncDep3ActionPerformed
-
     private void btnEncDep4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep4ActionPerformed
-        // TODO add your handling code here:
+        Listado_Faltantes_Productos listadoFaltantes = new Listado_Faltantes_Productos();
+        listadoFaltantes.setVisible(true);
     }//GEN-LAST:event_btnEncDep4ActionPerformed
 
     private void btnEncDep6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep6ActionPerformed
@@ -427,34 +334,36 @@ public class menuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEncDep7ActionPerformed
 
-    private void btnEncDep8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEncDep8ActionPerformed
+    private void btnAuxAlmaABMProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlmaABMProActionPerformed
+        Carga_Producto cargaProducto = new Carga_Producto();
+        cargaProducto.setVisible(true);
+    }//GEN-LAST:event_btnAuxAlmaABMProActionPerformed
 
     private void btnVend1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVend1ActionPerformed
-        // TODO add your handling code here:
+        movInterno movInterno = new movInterno(usu);
+        movInterno.setVisible(true);
     }//GEN-LAST:event_btnVend1ActionPerformed
 
     private void btnVend2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVend2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVend2ActionPerformed
 
-    private void btnVend3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVend3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVend3ActionPerformed
-
     private void btnRep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRep1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRep1ActionPerformed
-
-    private void btnEncDep5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep5ActionPerformed
-        new Carga_Producto().setVisible(true);
-    }//GEN-LAST:event_btnEncDep5ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         this.dispose();
         new VentanaLogin().setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void btnEncDep6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncDep6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEncDep6ActionPerformed
+
+    private void btnAuxAlmaElimRemitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxAlmaElimRemitoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAuxAlmaElimRemitoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -509,23 +418,17 @@ public class menuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton btnAdmin;
-    private javax.swing.JButton btnAuxAlma1;
-    private javax.swing.JButton btnAuxAlma2;
+    private javax.swing.JButton btnAuxAlmaABMPro;
+    private javax.swing.JButton btnAuxAlmaElimRemito;
+    private javax.swing.JButton btnAuxAlmaModificarUbi;
+    private javax.swing.JButton btnAuxAlmaUbicarPro;
     private javax.swing.JButton btnAuxRec1;
-    private javax.swing.JButton btnAuxRec2;
-    private javax.swing.JButton btnEncDep1;
-    private javax.swing.JButton btnEncDep2;
-    private javax.swing.JButton btnEncDep3;
     private javax.swing.JButton btnEncDep4;
-    private javax.swing.JButton btnEncDep5;
     private javax.swing.JButton btnEncDep6;
     private javax.swing.JButton btnEncDep7;
-    private javax.swing.JButton btnEncDep8;
     private javax.swing.JButton btnRep1;
-    private javax.swing.JButton btnRep2;
     private javax.swing.JButton btnVend1;
     private javax.swing.JButton btnVend2;
-    private javax.swing.JButton btnVend3;
     private javax.swing.JButton jButton10;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
